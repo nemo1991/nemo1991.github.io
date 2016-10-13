@@ -1,3 +1,5 @@
-#inital read me
+##hexo文档地址
+https://hexo.io/zh-cn/docs/
 
-balabala
+##Next文档地址
+http://theme-next.iissnan.com/getting-started.html
