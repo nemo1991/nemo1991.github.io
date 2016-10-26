@@ -18,7 +18,7 @@ duoshuo_shortname: ruiqh
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: http://ruiqh.tizone.org
 root: /
-permalink: :year/:month/:day/:title/
+permalink: :year/:month/:day/:title.html
 permalink_defaults:
 
 # Directory
@@ -48,9 +48,11 @@ highlight:
   tab_replace:
 
 # Category & Tag
-default_category: uncategorized
+default_category: dir
 category_map:
+  目录: dir
 tag_map:
+  如何: how_to
 
 # Date / Time format
 ## Hexo uses Moment.js to parse and display date
