@@ -53,6 +53,7 @@ category_map:
   目录: dir
 tag_map:
   如何: how_to
+  前端开发: front_dev
 
 # Date / Time format
 ## Hexo uses Moment.js to parse and display date
