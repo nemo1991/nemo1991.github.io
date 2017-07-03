@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="ruiqh">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="20170622"/>
+  <meta property="og:description" content="噗!噗噗!噗噗!噗..." />
+  <meta property="og:site_name" content="噗!"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="http://www.tizone.orgundefined"/>
+  
+    <link rel="alternate" href="/atom.xml" title="噗!" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <!-- Site Title -->
+  <title>噗!</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.light.css">
+
+  <!-- Google Analytics -->
+  
+
+</head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">20170622</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="http://www.tizone.org">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/nemo1991">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:tizone.rui@gmail.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By ruiqh</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2017-06-22</span>
+            <span class="time">23:24:27</span>
+          </span>
+          
+          <!--  Categories  -->
+            <span class="categories info">Under 
+
+<a href="/categories/2017/">2017</a>
+</span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/daily/">#daily</a> <a class="tag" href="/tags/linux/">#linux</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>刚安装好的ubuntu系统使用sudo apt-get install openssh-server 报错<br><a id="more"></a></p>
+<h1 id="20170622"><a href="#20170622" class="headerlink" title="20170622"></a>20170622</h1><h2 id="resolved"><a href="#resolved" class="headerlink" title="resolved"></a>resolved</h2><h3 id="1-ubuntu-安装应用命令"><a href="#1-ubuntu-安装应用命令" class="headerlink" title="1. ubuntu 安装应用命令"></a>1. ubuntu 安装应用命令</h3><p>刚安装好的ubuntu系统使用sudo apt-get install openssh-server 报错</p>
+<blockquote>
+<p>Package openssh-server is not available, but is referred to by  another package</p>
+</blockquote>
+<p>在UBUNTU下，我们维护一个源列表，源列表里面都是一些网址信息，这每一条网址就是一个源，这个地址指向的数据标识着这台源服务器上有哪些软件可以安装使用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> 源列表文件</div><div class="line">sudo cat /etc/apt/sources.list</div><div class="line"><span class="meta">#</span> 更新源中 应用列表</div><div class="line">sudo apt-get update </div><div class="line"><span class="meta">#</span> 与本地安装的应用版本对比, 更新应用</div><div class="line"><span class="meta">#</span> 慎用 upgrade, 如果源里面有系统更新的话，会将系统一并更新掉</div><div class="line">sudo apt-get upgrade</div></pre></td></tr></table></figure>
+<h3 id="2-ubuntu-网络接口配置文件"><a href="#2-ubuntu-网络接口配置文件" class="headerlink" title="2. ubuntu 网络接口配置文件"></a>2. ubuntu 网络接口配置文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> 接口配置文件</div><div class="line">cat /etc/network/interfaces</div><div class="line"><span class="meta">#</span> auto 开机自动挂载</div><div class="line">auto lo </div><div class="line"><span class="meta">#</span> 重启网卡</div><div class="line">/etc/init.d/networking restart   </div><div class="line"><span class="meta">#</span> 使修改配置生效优点是不影响其他网络接口</div><div class="line">sudo ifdown eth0</div><div class="line">sudo ifup eth0</div><div class="line"><span class="meta">#</span> ubuntu dns信息保存在/etc/resolv.conf但不能直接编辑</div><div class="line"><span class="meta">#</span> 在ubuntu中dns信息是放在/etc/resolvconf/resolv.conf.d/目录下一般情况下这个目录下有base和head两个文件夹</div><div class="line">vim /etc/resolvconf/resolv.conf.d/base</div><div class="line">nameserver 8.8.8.8</div><div class="line">nameserver 114.114.114.114</div><div class="line"><span class="meta">#</span>保存后执行</div><div class="line">resolvconf -u</div><div class="line"><span class="meta">#</span>用以下命令使网络设置生效</div><div class="line">service networking restart</div><div class="line">sudo /etc/init.d/networking restart</div></pre></td></tr></table></figure>
+<h2 id="pending"><a href="#pending" class="headerlink" title="pending"></a>pending</h2><ol>
+<li>如何在Linux系统中安装离线应用</li>
+<li>子网掩码是做什么用的</li>
+<li>网络基本功</li>
+<li>游戏修改器的制作原理？</li>
+</ol>
+<h3 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h3><ol>
+<li><a href="http://www.2cto.com/os/201404/292853.html" target="_blank" rel="external">ubuntu网络配置初步/etc/network</a></li>
+<li><a href="http://www.cnblogs.com/yudar/p/4446975.html" target="_blank" rel="external">ubuntu 网络配置</a></li>
+<li><a href="https://www.zhihu.com/question/25698941" target="_blank" rel="external">游戏修改器的制作原理？</a></li>
+<li><a href="https://wizardforcel.gitbooks.io/network-basic/content/11.html" target="_blank" rel="external">网络基本功</a></li>
+<li><a href="http://blog.csdn.net/jmyue/article/details/17288467" target="_blank" rel="external">Linux网络接口配置文件ifcfg-eth0解析</a></li>
+</ol>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+

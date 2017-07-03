@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="ruiqh">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="20170628"/>
+  <meta property="og:description" content="噗!噗噗!噗噗!噗..." />
+  <meta property="og:site_name" content="噗!"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="http://www.tizone.orgundefined"/>
+  
+    <link rel="alternate" href="/atom.xml" title="噗!" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <!-- Site Title -->
+  <title>噗!</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.light.css">
+
+  <!-- Google Analytics -->
+  
+
+</head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">20170628</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="http://www.tizone.org">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/nemo1991">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:tizone.rui@gmail.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By ruiqh</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2017-06-28</span>
+            <span class="time">23:24:27</span>
+          </span>
+          
+          <!--  Categories  -->
+            <span class="categories info">Under 
+
+<a href="/categories/2017/">2017</a>
+</span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/daily/">#daily</a> <a class="tag" href="/tags/msbuild/">#msbuild</a> <a class="tag" href="/tags/powershell/">#powershell</a> <a class="tag" href="/tags/javascript/">#javascript</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>powershell 执行命令路径中有空格如何处理<br><a id="more"></a></p>
+<h1 id="20170628"><a href="#20170628" class="headerlink" title="20170628"></a>20170628</h1><h2 id="resolved"><a href="#resolved" class="headerlink" title="resolved"></a>resolved</h2><h3 id="powershell-执行命令路径中有空格如何处理"><a href="#powershell-执行命令路径中有空格如何处理" class="headerlink" title="powershell 执行命令路径中有空格如何处理"></a>powershell 执行命令路径中有空格如何处理</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 使用双引号或单引号将路径及应用包住, 包住的内容起始加入&amp;表示执行</div><div class="line"></div><div class="line">&amp;&apos;C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin\MSBuild.exe&apos; /consoleloggerparameters:ErrorsOnly /maxcpucount /nologo /property:Configuration=Release /verbosity:quiet &quot;build\QingdaoBeer.CTS.sln&quot;</div></pre></td></tr></table></figure>
+<h3 id="MSBuild编译报错-MSB3644"><a href="#MSBuild编译报错-MSB3644" class="headerlink" title="MSBuild编译报错 MSB3644"></a>MSBuild编译报错 MSB3644</h3><h3 id="MSBuild-Publish-WebSite"><a href="#MSBuild-Publish-WebSite" class="headerlink" title="MSBuild Publish WebSite"></a>MSBuild Publish WebSite</h3><p><a href="https://stackoverflow.com/questions/3097489/how-to-publish-web-with-msbuild" target="_blank" rel="external">How to Publish Web with msbuild?</a></p>
+<h3 id="window-close-关闭浏览器窗口"><a href="#window-close-关闭浏览器窗口" class="headerlink" title="window.close 关闭浏览器窗口"></a>window.close 关闭浏览器窗口</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.open(<span class="string">""</span>,<span class="string">"_self"</span>).close();</div></pre></td></tr></table></figure>
+<p><a href="http://blog.csdn.net/hantiannan/article/details/7402621" target="_blank" rel="external">Javascript:window.close()不起作用？</a></p>
+<h2 id="pending"><a href="#pending" class="headerlink" title="pending"></a>pending</h2><h3 id="MSBuild-参数说明"><a href="#MSBuild-参数说明" class="headerlink" title="MSBuild 参数说明"></a>MSBuild 参数说明</h3><p><a href="http://blog.csdn.net/renzhegzs/article/details/47603799" target="_blank" rel="external">使用命令行编译vs2010的工程</a><br><a href="http://www.cnblogs.com/shanyou/p/3452938.html" target="_blank" rel="external">MSBuild的简单介绍与使用</a><br><a href="https://docs.microsoft.com/zh-cn/visualstudio/msbuild/msbuild" target="_blank" rel="external">MSBuild</a></p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+
