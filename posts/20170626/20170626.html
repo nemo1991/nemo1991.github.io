@@ -101,7 +101,7 @@
           <!-- Date -->
           <span class="date-time info">On
             <span class="date">2017-06-26</span>
-            <span class="time">23:24:27</span>
+            <span class="time">10:47:57</span>
           </span>
           
           <!--  Categories  -->
@@ -139,7 +139,7 @@
 <li>bundle path 不能和真实路径名称相同</li>
 </ol>
 <h3 id="4-Create-Custom-Configuration-Sections"><a href="#4-Create-Custom-Configuration-Sections" class="headerlink" title="4.Create Custom Configuration Sections"></a>4.Create Custom Configuration Sections</h3><p><code>ConfigurationSection</code><br><code>ConfigurationElement</code><br><code>ConfigurationElementCollection</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None) as Configuration;</div><div class="line"></div><div class="line">CustomSection section = config.GetSection(&quot;section&quot;) as CustomSection;</div><div class="line"></div><div class="line">var value = section.Settings[index/&quot;key&quot;];</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None) as Configuration;</div><div class="line">CustomSection section = config.GetSection(&quot;section&quot;) as CustomSection;</div><div class="line">var value = section.Settings[index/&quot;key&quot;];</div></pre></td></tr></table></figure>
 <h2 id="pending"><a href="#pending" class="headerlink" title="pending"></a>pending</h2><h2 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h2><ol>
 <li><a href="https://msdn.microsoft.com/en-us/library/2tw134k3.aspx" target="_blank" rel="external">Create Custom Configuration Sections Using ConfigurationSection</a></li>
 <li><a href="https://msdn.microsoft.com/en-us/library/system.configuration.configurationelementcollection.aspx" target="_blank" rel="external">ConfigurationElementCollection Class</a></li>

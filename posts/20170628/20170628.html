@@ -101,7 +101,7 @@
           <!-- Date -->
           <span class="date-time info">On
             <span class="date">2017-06-28</span>
-            <span class="time">23:24:27</span>
+            <span class="time">10:47:57</span>
           </span>
           
           <!--  Categories  -->
@@ -124,7 +124,7 @@
         <!-- Post Main Content -->
         <div class="post-content">
           <p>powershell 执行命令路径中有空格如何处理<br><a id="more"></a></p>
-<h1 id="20170628"><a href="#20170628" class="headerlink" title="20170628"></a>20170628</h1><h2 id="resolved"><a href="#resolved" class="headerlink" title="resolved"></a>resolved</h2><h3 id="powershell-执行命令路径中有空格如何处理"><a href="#powershell-执行命令路径中有空格如何处理" class="headerlink" title="powershell 执行命令路径中有空格如何处理"></a>powershell 执行命令路径中有空格如何处理</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 使用双引号或单引号将路径及应用包住, 包住的内容起始加入&amp;表示执行</div><div class="line"></div><div class="line">&amp;&apos;C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin\MSBuild.exe&apos; /consoleloggerparameters:ErrorsOnly /maxcpucount /nologo /property:Configuration=Release /verbosity:quiet &quot;build\QingdaoBeer.CTS.sln&quot;</div></pre></td></tr></table></figure>
+<h1 id="20170628"><a href="#20170628" class="headerlink" title="20170628"></a>20170628</h1><h2 id="resolved"><a href="#resolved" class="headerlink" title="resolved"></a>resolved</h2><h3 id="powershell-执行命令路径中有空格如何处理"><a href="#powershell-执行命令路径中有空格如何处理" class="headerlink" title="powershell 执行命令路径中有空格如何处理"></a>powershell 执行命令路径中有空格如何处理</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> 使用双引号或单引号将路径及应用包住, 包住的内容起始加入&amp;表示执行</div><div class="line">&amp;'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin\MSBuild.exe' /consoleloggerparameters:ErrorsOnly /maxcpucount /nologo /property:Configuration=Release /verbosity:quiet "build\QingdaoBeer.CTS.sln"</div></pre></td></tr></table></figure>
 <h3 id="MSBuild编译报错-MSB3644"><a href="#MSBuild编译报错-MSB3644" class="headerlink" title="MSBuild编译报错 MSB3644"></a>MSBuild编译报错 MSB3644</h3><h3 id="MSBuild-Publish-WebSite"><a href="#MSBuild-Publish-WebSite" class="headerlink" title="MSBuild Publish WebSite"></a>MSBuild Publish WebSite</h3><p><a href="https://stackoverflow.com/questions/3097489/how-to-publish-web-with-msbuild" target="_blank" rel="external">How to Publish Web with msbuild?</a></p>
 <h3 id="window-close-关闭浏览器窗口"><a href="#window-close-关闭浏览器窗口" class="headerlink" title="window.close 关闭浏览器窗口"></a>window.close 关闭浏览器窗口</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.open(<span class="string">""</span>,<span class="string">"_self"</span>).close();</div></pre></td></tr></table></figure>
 <p><a href="http://blog.csdn.net/hantiannan/article/details/7402621" target="_blank" rel="external">Javascript:window.close()不起作用？</a></p>
