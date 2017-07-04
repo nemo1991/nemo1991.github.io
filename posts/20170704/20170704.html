@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="ruiqh">
   <!-- Open Graph Data -->
-  <meta property="og:title" content="20170628"/>
+  <meta property="og:title" content="20170704"/>
   <meta property="og:description" content="噗!噗噗!噗噗!噗..." />
   <meta property="og:site_name" content="噗!"/>
   <meta property="og:type" content="article" />
@@ -43,7 +43,7 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="page-title with-background-image">
-          <p class="title">20170628</p>
+          <p class="title">20170704</p>
           <p class="subtitle"></p>
         </div>
         <div class="site-menu with-background-image">
@@ -100,7 +100,7 @@
           
           <!-- Date -->
           <span class="date-time info">On
-            <span class="date">2017-06-28</span>
+            <span class="date">2017-07-04</span>
             <span class="time">22:35:44</span>
           </span>
           
@@ -116,19 +116,27 @@
           <div class="post-tags text-muted">
             Tags: 
 
-<a class="tag" href="/tags/daily/">#daily</a> <a class="tag" href="/tags/msbuild/">#msbuild</a> <a class="tag" href="/tags/powershell/">#powershell</a> <a class="tag" href="/tags/javascript/">#javascript</a>
+<a class="tag" href="/tags/daily/">#daily</a> <a class="tag" href="/tags/git/">#git</a>
 
 
           </div>
         
         <!-- Post Main Content -->
         <div class="post-content">
-          <p>powershell 执行命令路径中有空格如何处理<br><a id="more"></a></p>
-<h1 id="20170628"><a href="#20170628" class="headerlink" title="20170628"></a>20170628</h1><h2 id="resolved"><a href="#resolved" class="headerlink" title="resolved"></a>resolved</h2><h3 id="powershell-执行命令路径中有空格如何处理"><a href="#powershell-执行命令路径中有空格如何处理" class="headerlink" title="powershell 执行命令路径中有空格如何处理"></a>powershell 执行命令路径中有空格如何处理</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> 使用双引号或单引号将路径及应用包住, 包住的内容起始加入&amp;表示执行</div><div class="line">&amp;'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin\MSBuild.exe' /consoleloggerparameters:ErrorsOnly /maxcpucount /nologo /property:Configuration=Release /verbosity:quiet "build\QingdaoBeer.CTS.sln"</div></pre></td></tr></table></figure>
-<h3 id="MSBuild编译报错-MSB3644"><a href="#MSBuild编译报错-MSB3644" class="headerlink" title="MSBuild编译报错 MSB3644"></a>MSBuild编译报错 MSB3644</h3><h3 id="MSBuild-Publish-WebSite"><a href="#MSBuild-Publish-WebSite" class="headerlink" title="MSBuild Publish WebSite"></a>MSBuild Publish WebSite</h3><p><a href="https://stackoverflow.com/questions/3097489/how-to-publish-web-with-msbuild" target="_blank" rel="external">How to Publish Web with msbuild?</a></p>
-<h3 id="window-close-关闭浏览器窗口"><a href="#window-close-关闭浏览器窗口" class="headerlink" title="window.close 关闭浏览器窗口"></a>window.close 关闭浏览器窗口</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.open(<span class="string">""</span>,<span class="string">"_self"</span>).close();</div></pre></td></tr></table></figure>
-<p><a href="http://blog.csdn.net/hantiannan/article/details/7402621" target="_blank" rel="external">Javascript:window.close()不起作用？</a></p>
-<h2 id="pending"><a href="#pending" class="headerlink" title="pending"></a>pending</h2><h3 id="MSBuild-参数说明"><a href="#MSBuild-参数说明" class="headerlink" title="MSBuild 参数说明"></a>MSBuild 参数说明</h3><p><a href="http://blog.csdn.net/renzhegzs/article/details/47603799" target="_blank" rel="external">使用命令行编译vs2010的工程</a><br><a href="http://www.cnblogs.com/shanyou/p/3452938.html" target="_blank" rel="external">MSBuild的简单介绍与使用</a><br><a href="https://docs.microsoft.com/zh-cn/visualstudio/msbuild/msbuild" target="_blank" rel="external">MSBuild</a></p>
+          <p>我认为最深沉的爱 莫过于分开以后 我将自己 活成了你的样子<br><a id="more"></a></p>
+<h1 id="20170704"><a href="#20170704" class="headerlink" title="20170704"></a>20170704</h1><h2 id="resolved"><a href="#resolved" class="headerlink" title="resolved"></a>resolved</h2><h3 id="1-hexo-git-发布注意事项"><a href="#1-hexo-git-发布注意事项" class="headerlink" title="1. hexo git 发布注意事项"></a>1. hexo git 发布注意事项</h3><p>hexo每次deploy的时候都会重新生成文件，手动添加在github的文件会被直接删除，请把需要的文件放到 hexo folder/source文件夹中</p>
+<h3 id="2-git添加远程仓库"><a href="#2-git添加远程仓库" class="headerlink" title="2. git添加远程仓库"></a>2. git添加远程仓库</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> 1.查看远程仓库</div><div class="line">git remote</div><div class="line">git remote -v(--verbose)</div><div class="line"><span class="meta">#</span> 2.添加远程仓库</div><div class="line">git remote add [shortname] [url]</div><div class="line"><span class="meta">#</span> 3.获取远程仓库数据</div><div class="line">git fetch [shortname]</div><div class="line"><span class="meta">#</span> 4.推送至远程仓库</div><div class="line">git push  [shortname] [branch]</div><div class="line"><span class="meta">#</span> 5.查看远程仓库的详细信息</div><div class="line">git remote show [shortname]</div><div class="line"><span class="meta">#</span> 6. 删除和重命名</div><div class="line">git remote rname [beforename] [aftername]</div><div class="line">git remote rm [shortname]</div></pre></td></tr></table></figure>
+<h2 id="pending"><a href="#pending" class="headerlink" title="pending"></a>pending</h2><ol>
+<li>.net 类设计准则</li>
+<li>静态类特点,归属<br><img src="/images/20170704223036.png" alt=""></li>
+</ol>
+<h2 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h2><ol>
+<li><a href="http://code.wileam.com/build-a-hexo-blog-and-optimize/" target="_blank" rel="external">hexo搭建静态博客以及优化</a></li>
+<li><a href="https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80-%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8" target="_blank" rel="external">Git 基础 - 远程仓库的使用</a></li>
+<li><a href="https://www.bbsmax.com/A/MyJxvj9edn/" target="_blank" rel="external">C#基础精华02</a></li>
+<li><a href="http://dingjq.blog.51cto.com/260625/338636" target="_blank" rel="external">静态成员与实例成员的区别</a></li>
+<li><a href="https://msdn.microsoft.com/zh-cn/library/ms229036(v=vs.110).aspx" target="_blank" rel="external">类型设计准则</a></li>
+</ol>
 
         </div>
       </div>
