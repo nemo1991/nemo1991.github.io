@@ -481,9 +481,8 @@ body {
   font-size: 100%; /* add PX (or original value) as backup */
   font-size: 100%;
 }
-a {
-  color: #1999ec;
-}
+a:not(.contract > a),
+a color $theme-color,
 a:hover {
   text-decoration: none;
   color: #171314;
@@ -734,6 +733,9 @@ footer {
   border-top: 1px solid #e0e0e0;
   font-size: 0.75rem;
   text-align: center;
+}
+.contract li {
+  display: inline;
 }
 .pagination {
   display: block;
