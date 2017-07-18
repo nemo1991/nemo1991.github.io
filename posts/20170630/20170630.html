@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="">
-  <meta name="author" content="ruiqh">
+  <meta name="author" content="Scott.Rui">
   <!-- Open Graph Data -->
   <meta property="og:title" content="20170630" />
   <meta property="og:description" content="噗!噗噗!噗噗!噗..." />
@@ -17,25 +17,22 @@
     <link rel="alternate" href="/atom.xml" title="噗!" type="application/atom+xml">
   
   
-        <link rel="icon" href="/favicon.ico">
-        
-          <!-- Site Title -->
-          <title>
-            噗!
-          </title>
-       <!-- font awesome CSS -->
-            <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
-          <!-- Bootstrap CSS -->
-          <link rel="stylesheet" href="/css/bootstrap.min.css">
-       
-              <!-- Custom CSS -->
-              
-                <link rel="stylesheet" href="/css/style.light.css">
+    <link rel="icon" href="/favicon.ico">
+  
+  <!-- Site Title -->
+  <title>
+    噗!
+  </title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- font awesome CSS -->
+  <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.light.css">
+  <!-- Google Analytics -->
+  
 
-                  <!-- Google Analytics -->
-                  
-
-                
 </head>
   <body>
     <!-- Page Header -->
@@ -55,7 +52,7 @@
               <li>
                 <a href="/">
                   
-                  Home
+                  首页
                   
                 </a>
               </li>
@@ -63,7 +60,15 @@
               <li>
                 <a href="/archives">
                   
-                  Archives
+                  归档
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/tags">
+                  
+                  标签
                   
                 </a>
               </li>
@@ -79,16 +84,18 @@
 <article>
   <div class="container typo">
     <div class="row">
+ 
+       
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="post-info text-muted">
           
             <!-- Author -->
-            <span class="author info">By ruiqh</span>
+            <span class="author info">By Scott.Rui</span>
           
           <!-- Date -->
           <span class="date-time info">On
             <span class="date">2017-06-30</span>
-            <span class="time">23:14:21</span>
+            <span class="time">12:28:40</span>
           </span>
           
           <!--  Categories  -->
@@ -111,11 +118,12 @@
         <!-- Post Main Content -->
         <div class="post-content">
           <p>centos7 modify dns<br><a id="more"></a></p>
-<h1 id="20170630"><a href="#20170630" class="headerlink" title="20170630"></a>20170630</h1><h2 id="resolved"><a href="#resolved" class="headerlink" title="resolved"></a>resolved</h2><h3 id="1-centos7-modify-dns"><a href="#1-centos7-modify-dns" class="headerlink" title="1.centos7 modify dns"></a>1.centos7 modify dns</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">#查看当前启动的连接</div><div class="line">nmcli  connection show  </div><div class="line">#更改dns</div><div class="line">nmcli con mod eth0 ipv4.dns xxxxxxx   </div><div class="line">#配置生效</div><div class="line">nmcli con up eth0  </div><div class="line"></div><div class="line">#另外也可以继续使用/etc/resolv.conf</div><div class="line">#修改 /etc/NetworkManager/NetworkManager.conf 文件，在main部分添加 “dns=none” 选项：</div><div class="line">[main]</div><div class="line">plugins=ifcfg-rh</div><div class="line">dns=none</div><div class="line">#重启网卡</div><div class="line">systemctl restart NetworkManager.service</div></pre></td></tr></table></figure>
+<h2 id="resolved"><a href="#resolved" class="headerlink" title="resolved"></a>resolved</h2><h3 id="1-centos7-modify-dns"><a href="#1-centos7-modify-dns" class="headerlink" title="1.centos7 modify dns"></a>1.centos7 modify dns</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">#查看当前启动的连接</div><div class="line">nmcli  connection show  </div><div class="line">#更改dns</div><div class="line">nmcli con mod eth0 ipv4.dns xxxxxxx   </div><div class="line">#配置生效</div><div class="line">nmcli con up eth0  </div><div class="line"></div><div class="line">#另外也可以继续使用/etc/resolv.conf</div><div class="line">#修改 /etc/NetworkManager/NetworkManager.conf 文件，在main部分添加 “dns=none” 选项：</div><div class="line">[main]</div><div class="line">plugins=ifcfg-rh</div><div class="line">dns=none</div><div class="line">#重启网卡</div><div class="line">systemctl restart NetworkManager.service</div></pre></td></tr></table></figure>
 <h3 id="2-centos-查看时间及时区"><a href="#2-centos-查看时间及时区" class="headerlink" title="2.centos 查看时间及时区"></a>2.centos 查看时间及时区</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">date</div><div class="line">date -R</div><div class="line"></div><div class="line">## 修改gitlab 时区</div><div class="line"></div><div class="line">gitlab_rails[&apos;time_zone&apos;] = &apos;Asia/Shanghai&apos;</div></pre></td></tr></table></figure>
 <h2 id="pending"><a href="#pending" class="headerlink" title="pending"></a>pending</h2><h2 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h2>
         </div>
       </div>
+      
     </div>
   </div>
 </article>

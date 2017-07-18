@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="">
-  <meta name="author" content="ruiqh">
+  <meta name="author" content="Scott.Rui">
   <!-- Open Graph Data -->
   <meta property="og:title" content="20170628" />
   <meta property="og:description" content="噗!噗噗!噗噗!噗..." />
@@ -17,25 +17,22 @@
     <link rel="alternate" href="/atom.xml" title="噗!" type="application/atom+xml">
   
   
-        <link rel="icon" href="/favicon.ico">
-        
-          <!-- Site Title -->
-          <title>
-            噗!
-          </title>
-       <!-- font awesome CSS -->
-            <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
-          <!-- Bootstrap CSS -->
-          <link rel="stylesheet" href="/css/bootstrap.min.css">
-       
-              <!-- Custom CSS -->
-              
-                <link rel="stylesheet" href="/css/style.light.css">
+    <link rel="icon" href="/favicon.ico">
+  
+  <!-- Site Title -->
+  <title>
+    噗!
+  </title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- font awesome CSS -->
+  <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.light.css">
+  <!-- Google Analytics -->
+  
 
-                  <!-- Google Analytics -->
-                  
-
-                
 </head>
   <body>
     <!-- Page Header -->
@@ -55,7 +52,7 @@
               <li>
                 <a href="/">
                   
-                  Home
+                  首页
                   
                 </a>
               </li>
@@ -63,7 +60,15 @@
               <li>
                 <a href="/archives">
                   
-                  Archives
+                  归档
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/tags">
+                  
+                  标签
                   
                 </a>
               </li>
@@ -79,16 +84,18 @@
 <article>
   <div class="container typo">
     <div class="row">
+ 
+       
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="post-info text-muted">
           
             <!-- Author -->
-            <span class="author info">By ruiqh</span>
+            <span class="author info">By Scott.Rui</span>
           
           <!-- Date -->
           <span class="date-time info">On
             <span class="date">2017-06-28</span>
-            <span class="time">23:14:21</span>
+            <span class="time">12:28:40</span>
           </span>
           
           <!--  Categories  -->
@@ -103,7 +110,7 @@
           <div class="post-tags text-muted">
             Tags: 
 
-<a class="tag" href="/tags/daily/">#daily</a> <a class="tag" href="/tags/msbuild/">#msbuild</a> <a class="tag" href="/tags/powershell/">#powershell</a> <a class="tag" href="/tags/javascript/">#javascript</a>
+<a class="tag" href="/tags/daily/">#daily</a> <a class="tag" href="/tags/powershell/">#powershell</a> <a class="tag" href="/tags/msbuild/">#msbuild</a> <a class="tag" href="/tags/javascript/">#javascript</a>
 
 
           </div>
@@ -111,7 +118,7 @@
         <!-- Post Main Content -->
         <div class="post-content">
           <p>powershell 执行命令路径中有空格如何处理<br><a id="more"></a></p>
-<h1 id="20170628"><a href="#20170628" class="headerlink" title="20170628"></a>20170628</h1><h2 id="resolved"><a href="#resolved" class="headerlink" title="resolved"></a>resolved</h2><h3 id="powershell-执行命令路径中有空格如何处理"><a href="#powershell-执行命令路径中有空格如何处理" class="headerlink" title="powershell 执行命令路径中有空格如何处理"></a>powershell 执行命令路径中有空格如何处理</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> 使用双引号或单引号将路径及应用包住, 包住的内容起始加入&amp;表示执行</div><div class="line">&amp;'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin\MSBuild.exe' /consoleloggerparameters:ErrorsOnly /maxcpucount /nologo /property:Configuration=Release /verbosity:quiet "build\QingdaoBeer.CTS.sln"</div></pre></td></tr></table></figure>
+<h2 id="resolved"><a href="#resolved" class="headerlink" title="resolved"></a>resolved</h2><h3 id="powershell-执行命令路径中有空格如何处理"><a href="#powershell-执行命令路径中有空格如何处理" class="headerlink" title="powershell 执行命令路径中有空格如何处理"></a>powershell 执行命令路径中有空格如何处理</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> 使用双引号或单引号将路径及应用包住, 包住的内容起始加入&amp;表示执行</div><div class="line">&amp;'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin\MSBuild.exe' /consoleloggerparameters:ErrorsOnly /maxcpucount /nologo /property:Configuration=Release /verbosity:quiet "build\QingdaoBeer.CTS.sln"</div></pre></td></tr></table></figure>
 <h3 id="MSBuild编译报错-MSB3644"><a href="#MSBuild编译报错-MSB3644" class="headerlink" title="MSBuild编译报错 MSB3644"></a>MSBuild编译报错 MSB3644</h3><h3 id="MSBuild-Publish-WebSite"><a href="#MSBuild-Publish-WebSite" class="headerlink" title="MSBuild Publish WebSite"></a>MSBuild Publish WebSite</h3><p><a href="https://stackoverflow.com/questions/3097489/how-to-publish-web-with-msbuild" target="_blank" rel="external">How to Publish Web with msbuild?</a></p>
 <h3 id="window-close-关闭浏览器窗口"><a href="#window-close-关闭浏览器窗口" class="headerlink" title="window.close 关闭浏览器窗口"></a>window.close 关闭浏览器窗口</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.open(<span class="string">""</span>,<span class="string">"_self"</span>).close();</div></pre></td></tr></table></figure>
 <p><a href="http://blog.csdn.net/hantiannan/article/details/7402621" target="_blank" rel="external">Javascript:window.close()不起作用？</a></p>
@@ -119,6 +126,7 @@
 
         </div>
       </div>
+      
     </div>
   </div>
 </article>

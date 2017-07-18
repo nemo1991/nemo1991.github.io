@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="">
-  <meta name="author" content="ruiqh">
+  <meta name="author" content="Scott.Rui">
   <!-- Open Graph Data -->
   <meta property="og:title" content="20170623" />
   <meta property="og:description" content="噗!噗噗!噗噗!噗..." />
@@ -17,25 +17,22 @@
     <link rel="alternate" href="/atom.xml" title="噗!" type="application/atom+xml">
   
   
-        <link rel="icon" href="/favicon.ico">
-        
-          <!-- Site Title -->
-          <title>
-            噗!
-          </title>
-       <!-- font awesome CSS -->
-            <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
-          <!-- Bootstrap CSS -->
-          <link rel="stylesheet" href="/css/bootstrap.min.css">
-       
-              <!-- Custom CSS -->
-              
-                <link rel="stylesheet" href="/css/style.light.css">
+    <link rel="icon" href="/favicon.ico">
+  
+  <!-- Site Title -->
+  <title>
+    噗!
+  </title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- font awesome CSS -->
+  <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.light.css">
+  <!-- Google Analytics -->
+  
 
-                  <!-- Google Analytics -->
-                  
-
-                
 </head>
   <body>
     <!-- Page Header -->
@@ -55,7 +52,7 @@
               <li>
                 <a href="/">
                   
-                  Home
+                  首页
                   
                 </a>
               </li>
@@ -63,7 +60,15 @@
               <li>
                 <a href="/archives">
                   
-                  Archives
+                  归档
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/tags">
+                  
+                  标签
                   
                 </a>
               </li>
@@ -79,16 +84,18 @@
 <article>
   <div class="container typo">
     <div class="row">
+ 
+       
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="post-info text-muted">
           
             <!-- Author -->
-            <span class="author info">By ruiqh</span>
+            <span class="author info">By Scott.Rui</span>
           
           <!-- Date -->
           <span class="date-time info">On
             <span class="date">2017-06-23</span>
-            <span class="time">23:14:22</span>
+            <span class="time">12:28:40</span>
           </span>
           
           <!--  Categories  -->
@@ -111,7 +118,7 @@
         <!-- Post Main Content -->
         <div class="post-content">
           <p>gitlab omnibus install<br><a id="more"></a></p>
-<h1 id="20170623"><a href="#20170623" class="headerlink" title="20170623"></a>20170623</h1><h2 id="resloved"><a href="#resloved" class="headerlink" title="resloved"></a>resloved</h2><h3 id="1-gitlab-omnibus-install"><a href="#1-gitlab-omnibus-install" class="headerlink" title="1.gitlab omnibus install"></a>1.gitlab omnibus install</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> config file path</div><div class="line">cat /etc/gitlab/gitlab.rb</div><div class="line"><span class="meta">#</span> package version file</div><div class="line">cat /opt/gitlab/version-manifest.txt.</div><div class="line"><span class="meta">#</span> template file </div><div class="line"><span class="meta">#</span> https://gitlab.com/gitlab-org/omnibus-gitlab/raw/master/files/gitlab-config-template/gitlab.rb.template</div><div class="line"><span class="meta">#</span>To view a diff between your configuration file and the latest version</div><div class="line">sudo gitlab-ctl diff-config</div><div class="line"><span class="meta">#</span> make config effective</div><div class="line"><span class="meta">#</span> The omnibus-gitlab will attempt to query the underlaying system in order to check which init system it uses. This manifests itself as a WARNING during the `sudo gitlab-ctl reconfigure` run.</div><div class="line">sudo gitlab-ctl reconfigure</div><div class="line"><span class="meta">#</span> get service status</div><div class="line">sudo gitlab-ctl status</div><div class="line"><span class="meta">#</span> Start all GitLab components</div><div class="line">sudo gitlab-ctl start</div><div class="line"><span class="meta">#</span> Stop all GitLab components</div><div class="line">sudo gitlab-ctl stop</div><div class="line"><span class="meta">#</span> Restart all GitLab components</div><div class="line">sudo gitlab-ctl restart </div><div class="line"><span class="meta">#</span> Tail all logs; press Ctrl-C to exit</div><div class="line">sudo gitlab-ctl tail</div><div class="line"><span class="meta">#</span>You can verify GitLab's ability to send emails properly using the Rails console. On the GitLab server, execute gitlab-rails console to enter the console. Then, you can enter the following command at the console prompt to cause GitLab to send a test email:</div><div class="line">sudo gitlab-rails console</div><div class="line"><span class="meta">&gt;</span> Notify.test_email('destination_email@address.com', 'Message Subject', 'Message Body').deliver_now</div></pre></td></tr></table></figure>
+<h2 id="resloved"><a href="#resloved" class="headerlink" title="resloved"></a>resloved</h2><h3 id="1-gitlab-omnibus-install"><a href="#1-gitlab-omnibus-install" class="headerlink" title="1.gitlab omnibus install"></a>1.gitlab omnibus install</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> config file path</div><div class="line">cat /etc/gitlab/gitlab.rb</div><div class="line"><span class="meta">#</span> package version file</div><div class="line">cat /opt/gitlab/version-manifest.txt.</div><div class="line"><span class="meta">#</span> template file </div><div class="line"><span class="meta">#</span> https://gitlab.com/gitlab-org/omnibus-gitlab/raw/master/files/gitlab-config-template/gitlab.rb.template</div><div class="line"><span class="meta">#</span>To view a diff between your configuration file and the latest version</div><div class="line">sudo gitlab-ctl diff-config</div><div class="line"><span class="meta">#</span> make config effective</div><div class="line"><span class="meta">#</span> The omnibus-gitlab will attempt to query the underlaying system in order to check which init system it uses. This manifests itself as a WARNING during the `sudo gitlab-ctl reconfigure` run.</div><div class="line">sudo gitlab-ctl reconfigure</div><div class="line"><span class="meta">#</span> get service status</div><div class="line">sudo gitlab-ctl status</div><div class="line"><span class="meta">#</span> Start all GitLab components</div><div class="line">sudo gitlab-ctl start</div><div class="line"><span class="meta">#</span> Stop all GitLab components</div><div class="line">sudo gitlab-ctl stop</div><div class="line"><span class="meta">#</span> Restart all GitLab components</div><div class="line">sudo gitlab-ctl restart </div><div class="line"><span class="meta">#</span> Tail all logs; press Ctrl-C to exit</div><div class="line">sudo gitlab-ctl tail</div><div class="line"><span class="meta">#</span>You can verify GitLab's ability to send emails properly using the Rails console. On the GitLab server, execute gitlab-rails console to enter the console. Then, you can enter the following command at the console prompt to cause GitLab to send a test email:</div><div class="line">sudo gitlab-rails console</div><div class="line"><span class="meta">&gt;</span> Notify.test_email('destination_email@address.com', 'Message Subject', 'Message Body').deliver_now</div></pre></td></tr></table></figure>
 <h3 id="2-gitlab-config"><a href="#2-gitlab-config" class="headerlink" title="2.gitlab config"></a>2.gitlab config</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">external_url &quot;http://gitlab.example.com&quot;</div><div class="line"></div><div class="line">gitlab_rails[&apos;gitlab_email_from&apos;] = &apos;username@your domain&apos;</div><div class="line">gitlab_rails[&apos;smtp_enable&apos;] = true</div><div class="line">gitlab_rails[&apos;smtp_address&apos;] = &quot;smtpdm.aliyun.com&quot;</div><div class="line">gitlab_rails[&apos;smtp_port&apos;] = 80</div><div class="line">gitlab_rails[&apos;smtp_user_name&apos;] = &quot;username@your domain&quot;</div><div class="line">gitlab_rails[&apos;smtp_password&apos;] = &quot;password&quot;</div><div class="line">gitlab_rails[&apos;smtp_domain&apos;] = &quot;your domain&quot;</div><div class="line">gitlab_rails[&apos;smtp_authentication&apos;] = &quot;login&quot;</div></pre></td></tr></table></figure>
 <h3 id="3-aliyun-enterprise-mail-host-and-port"><a href="#3-aliyun-enterprise-mail-host-and-port" class="headerlink" title="3.aliyun enterprise mail host and port"></a>3.aliyun enterprise mail host and port</h3><blockquote>
 <p>企业云邮箱各个服务器地址及端口信息如下：</p>
@@ -148,6 +155,7 @@
 
         </div>
       </div>
+      
     </div>
   </div>
 </article>

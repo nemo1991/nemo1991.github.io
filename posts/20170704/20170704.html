@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="">
-  <meta name="author" content="ruiqh">
+  <meta name="author" content="Scott.Rui">
   <!-- Open Graph Data -->
   <meta property="og:title" content="20170704" />
   <meta property="og:description" content="噗!噗噗!噗噗!噗..." />
@@ -17,25 +17,22 @@
     <link rel="alternate" href="/atom.xml" title="噗!" type="application/atom+xml">
   
   
-        <link rel="icon" href="/favicon.ico">
-        
-          <!-- Site Title -->
-          <title>
-            噗!
-          </title>
-       <!-- font awesome CSS -->
-            <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
-          <!-- Bootstrap CSS -->
-          <link rel="stylesheet" href="/css/bootstrap.min.css">
-       
-              <!-- Custom CSS -->
-              
-                <link rel="stylesheet" href="/css/style.light.css">
+    <link rel="icon" href="/favicon.ico">
+  
+  <!-- Site Title -->
+  <title>
+    噗!
+  </title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- font awesome CSS -->
+  <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.light.css">
+  <!-- Google Analytics -->
+  
 
-                  <!-- Google Analytics -->
-                  
-
-                
 </head>
   <body>
     <!-- Page Header -->
@@ -55,7 +52,7 @@
               <li>
                 <a href="/">
                   
-                  Home
+                  首页
                   
                 </a>
               </li>
@@ -63,7 +60,15 @@
               <li>
                 <a href="/archives">
                   
-                  Archives
+                  归档
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/tags">
+                  
+                  标签
                   
                 </a>
               </li>
@@ -79,16 +84,18 @@
 <article>
   <div class="container typo">
     <div class="row">
+ 
+       
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="post-info text-muted">
           
             <!-- Author -->
-            <span class="author info">By ruiqh</span>
+            <span class="author info">By Scott.Rui</span>
           
           <!-- Date -->
           <span class="date-time info">On
             <span class="date">2017-07-04</span>
-            <span class="time">23:14:21</span>
+            <span class="time">12:28:40</span>
           </span>
           
           <!--  Categories  -->
@@ -103,7 +110,7 @@
           <div class="post-tags text-muted">
             Tags: 
 
-<a class="tag" href="/tags/daily/">#daily</a> <a class="tag" href="/tags/git/">#git</a>
+<a class="tag" href="/tags/daily/">#daily</a> <a class="tag" href="/tags/git/">#git</a> <a class="tag" href="/tags/hexo/">#hexo</a>
 
 
           </div>
@@ -111,7 +118,7 @@
         <!-- Post Main Content -->
         <div class="post-content">
           <p>我认为最深沉的爱 莫过于分开以后 我将自己 活成了你的样子<br><a id="more"></a></p>
-<h1 id="20170704"><a href="#20170704" class="headerlink" title="20170704"></a>20170704</h1><h2 id="resolved"><a href="#resolved" class="headerlink" title="resolved"></a>resolved</h2><h3 id="1-hexo-git-发布注意事项"><a href="#1-hexo-git-发布注意事项" class="headerlink" title="1. hexo git 发布注意事项"></a>1. hexo git 发布注意事项</h3><p>hexo每次deploy的时候都会重新生成文件，手动添加在github的文件会被直接删除，请把需要的文件放到 hexo folder/source文件夹中</p>
+<h2 id="resolved"><a href="#resolved" class="headerlink" title="resolved"></a>resolved</h2><h3 id="1-hexo-git-发布注意事项"><a href="#1-hexo-git-发布注意事项" class="headerlink" title="1. hexo git 发布注意事项"></a>1. hexo git 发布注意事项</h3><p>hexo每次deploy的时候都会重新生成文件，手动添加在github的文件会被直接删除，请把需要的文件放到 hexo folder/source文件夹中</p>
 <h3 id="2-git添加远程仓库"><a href="#2-git添加远程仓库" class="headerlink" title="2. git添加远程仓库"></a>2. git添加远程仓库</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> 1.查看远程仓库</div><div class="line">git remote</div><div class="line">git remote -v(--verbose)</div><div class="line"><span class="meta">#</span> 2.添加远程仓库</div><div class="line">git remote add [shortname] [url]</div><div class="line"><span class="meta">#</span> 3.获取远程仓库数据</div><div class="line">git fetch [shortname]</div><div class="line"><span class="meta">#</span> 4.推送至远程仓库</div><div class="line">git push  [shortname] [branch]</div><div class="line"><span class="meta">#</span> 5.查看远程仓库的详细信息</div><div class="line">git remote show [shortname]</div><div class="line"><span class="meta">#</span> 6. 删除和重命名</div><div class="line">git remote rname [beforename] [aftername]</div><div class="line">git remote rm [shortname]</div></pre></td></tr></table></figure>
 <h2 id="pending"><a href="#pending" class="headerlink" title="pending"></a>pending</h2><ol>
 <li>.net 类设计准则</li>
@@ -127,6 +134,7 @@
 
         </div>
       </div>
+      
     </div>
   </div>
 </article>
