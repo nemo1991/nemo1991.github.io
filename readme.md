@@ -40,3 +40,9 @@ bundle exec jekyll serve
 ```
 gem sources --add https://gems.ruby-china.com/ --remove https://rubygems.org/
 ```
+
+
+https://blog.csdn.net/weixin_41287260/article/details/102582315
+
+之前购买的域名解析CNAME删除后，依然会跳转到绑定的域名。
+绑定新域名，删除浏览器缓存或使用隐私模式，好了。
