@@ -1,0 +1,38 @@
+﻿---
+title: "20170703"
+date: 2017-07-03
+category: ["daily","2017"]
+tags: ["hexo"]
+toc: true
+---
+陛下纵不臣惜，如天下后世何！诚不敢奉诏 陛下富于春秋，皇子渐长，父作子述，古之道也，未闻有子而立弟者
+<!-- more -->
+
+## resolved
+
+### 1. hexo
+
+#### tools
+`git` `node.js` `hexo-cli`
+
+```
+$ npm install -g hexo-cli
+```
+
+#### commands
+```
+#set up
+```
+
+## pending
+
+
+> 陛下纵不臣惜，如天下后世何！诚不敢奉诏 陛下富于春秋，皇子渐长，父作子述，古之道也，未闻有子而立弟者
+
+> Watch your thoughts for they become words. Watch your words for they become actions. Watch your actions for they become...habits. Watch your habits, for they become your character. And watch your character, for it becomes your destiny! What we think we become. My father always said that... and I think I am fine. 
+> 所思成所言，所言成所为，所为成习，人格既然，命运不过如此而生！ 
+
+>　残灯无焰影幢幢，此夕闻君谪九江。
+>　垂死病中惊坐起，暗风吹雨入寒窗。
+
+## reference

@@ -1,0 +1,77 @@
+﻿---
+title: "20170627"
+date: 2017-06-27
+category: ["daily","2017"]
+tags: ["gitlab"]
+toc: true
+---
+gitlab CI
+<!--more-->
+## resolved
+
+### 1.gitlab CI
+
+#### tools
+    `gitlab-ci-runner`,`msbuild`,`nuget`
+
+#### install and register runner `win`
+
+1. download git-lab runner
+2. mkdir to save runer exe
+3. register to gitlab
+4. install gitlab-runner windows service
+```shell
+./gitlab.exe register
+# Please enter the gitlab-ci coordinator URL (e.g. https://gitlab.com )
+# https://gitlab.com
+# Please enter the gitlab-ci token for this runner
+# Please enter the gitlab-ci description for this runner
+# [hostame] my-runner
+# Please enter the gitlab-ci tags for this runner (comma separated):
+# my-tag,another-tag
+# Whether to run untagged jobs [true/false]:
+# [false]: true
+./gitlab.exe install
+```
+
+#### nuget install and restore packages
+
+```
+c:\nuget\nuget.exe restore "build\cts.sln"
+```
+
+#### msbuild build solution
+
+1. download msbuild standalone package
+2. use msbuild build solution
+
+```shell
+#2333
+&'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin\MSBuild.exe' /consoleloggerparameters:ErrorsOnly /maxcpucount /nologo /property:Configuration=Release /verbosity:quiet "build\QingdaoBeer.CTS.sln"
+```
+
+## pending
+
+### 1.nuget
+
+### 2.git commit rules
+
+1. buid pass
+
+## reference
+
+1. [GitLab CI持续集成配置方案][0]
+2. [劈荆斩棘：Gitlab 部署 CI 持续集成][1]
+3. [Install on Windows][2]
+4. [Setting up a PowerShell CI Pipeline using Gitlab][4]
+5. [PowerShell中运行带空格的命令][6]
+6. [NuGet CLI reference][3]
+7. [How can I install the VS2017 version of msbuild on a build server without installing the IDE?][5]
+
+[0]:http://www.cnblogs.com/newP/p/5735366.html
+[1]:http://www.cnblogs.com/xishuai/p/gitlab-ci.html
+[2]:https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/blob/master/docs/install/windows.md
+[3]:https://docs.microsoft.com/zh-cn/nuget/tools/nuget-exe-cli-reference
+[4]:http://blog.taylorgibb.com/setting-up-a-powershell-ci-pipeline/
+[5]:https://stackoverflow.com/questions/42696948/how-can-i-install-the-vs2017-version-of-msbuild-on-a-build-server-without-instal
+[6]:http://www.splaybow.com/post/powershell-run-command-with-space.html

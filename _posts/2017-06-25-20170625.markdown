@@ -1,0 +1,27 @@
+﻿---
+title: "20170625"
+date: 2017-06-25
+category: ["daily","2017"]
+tags: ["python"]
+toc: true
+---
+python `__name__`,`__init__.py`
+<!--more-->
+
+## resolved
+
+### python `__name__`,`__init__.py`
+
+`__name__` 执行文件名称
+
+```python
+if(__name__ == '__main__'){
+
+}
+```
+
+
+## pending
+
+
+

@@ -1,0 +1,92 @@
+﻿---
+title: "20170626"
+date: 2017-06-26
+category: ["daily","2017"]
+tags: ["asp.net","git"]
+toc: true
+---
+asp.net 2,3.5 upgrade path to 4.0
+<!--more-->
+
+## resolved
+
+### 1.asp.net 2,3.5 upgrade path to 4.0
+
+1. 使用Visual Studio 转换向导
+2. web.config修改
+
+```
+# 1. 在configSections 节中，移除名为“system.web.extensions”的 sectionGroup元素
+# 2. 在 system.web 节的 compilation 集合中，移除引用 .NET Framework 程序集的每个 add 元素 [谨慎删除]
+# 框架程序集通常以“System.”开头。 通常，它们在 assembly 特性中具有 Version=3.5.0.0。 但是，某些具有 3.5.0.0 版本号的程序集项可能引用的是作为加载项发布的一部分安装的程序集或者引用自定义程序集。 不要删除这些内容。 如果 Web.config 文件包含任何这类引用，必须逐个调查它们，以确定较高版本是否可用以及是否必须更改该版本引用。
+# 3. 将 targetFramework 特性添加到 system.web 节的 compilation 元素中，如下面的示例所示
+<compilation targetFramework="4.0">
+# 在 pages 节的开始标记中，添加一个 controlRenderingCompatibility 特性，如下面的示例所示：
+<pages controlRenderingCompatibilityVersion="3.5"/>
+# 很多 ASP.NET 4 控件呈现符合 XHTML 和辅助功能标准的 HTML。 但是，您所转换的网站可能具有 CSS 规则或客户端脚本，如果网页更改了它们呈现 HTML 的方式，则这些规则或脚本将无法正常工作。 如果想利用 ASP.NET 4 中对控件呈现的改进，则可以忽略此特性。 有关更多信息，请参见 ControlRenderingCompatibilityVersion。
+# 4. 在 system.codedom 节的 compilers 集合中，移除 c# 和 vb 的 compiler 元素
+# 5. 删除 system.webserver 节开始标记和结束标记之间的所有内容，但保留标记自身。
+# 6. 删除 runtime 节开始标记和结束标记之间的所有内容，但保留标记自身。
+```
+
+### 2.git when you commit changes to wrong branch
+
+```
+// get last commit number
+git log
+// use reset restore changes
+git reset number
+// use stash save changes
+git stash
+// change branch
+git checkout targetbranch
+// get saved changes
+git stash pop
+```
+
+> 根据–soft –mixed –hard，会对working tree和index和HEAD进行重置:
+> git reset –mixed：此为默认方式，不带任何参数的git reset，即时这种方式，它回退到某个版本，只保留源码，回退commit和index信息
+> git reset –soft：回退到某个版本，只回退了commit的信息，不会恢复到index file一级。如果还要提交，直接commit即可
+> git reset –hard：彻底回退到某个版本，本地的源码也会变为上一个版本的内容
+>
+>   HEAD 最近一个提交
+>   HEAD^ 上一次
+>   <commit_id>  每次commit的SHA1值. 可以用git log 看到,也可以在页面上commit标签页里找到
+
+### 3.bundle attention
+
+1. 使用相对路径不能使用绝对路径
+2. bundle path 不能和真实路径名称相同
+
+### 4.Create Custom Configuration Sections
+
+`ConfigurationSection`
+`ConfigurationElement`
+`ConfigurationElementCollection`
+
+```C#
+var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None) as Configuration;
+CustomSection section = config.GetSection("section") as CustomSection;
+var value = section.Settings[index/"key"];
+```
+
+## pending
+
+## reference
+1. [Create Custom Configuration Sections Using ConfigurationSection][1]
+2. [ConfigurationElementCollection Class][2]
+3. [将 ASP.NET Web 应用程序升级到 ASP.NET 4][0]
+4. [git-stash][3]
+5. [git 撤销commit][4]
+
+[0]:https://msdn.microsoft.com/zh-cn/library/dd483478(v=vs.100).aspx
+[1]:https://msdn.microsoft.com/en-us/library/2tw134k3.aspx
+[2]:https://msdn.microsoft.com/en-us/library/system.configuration.configurationelementcollection.aspx
+[3]:https://git-scm.com/docs/git-stash
+[4]:http://zhyq0826.iteye.com/blog/1671638
+
+
+
+
+
+

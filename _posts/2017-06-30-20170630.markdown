@@ -1,0 +1,44 @@
+﻿---
+title: "20170630"
+date: 2017-06-30
+category: ["daily","2017"]
+tags: ["linux","gitlab"]
+toc: true
+---
+centos7 modify dns
+<!--more-->
+## resolved
+
+### 1.centos7 modify dns
+
+```
+#查看当前启动的连接
+nmcli  connection show  
+#更改dns
+nmcli con mod eth0 ipv4.dns xxxxxxx   
+#配置生效
+nmcli con up eth0  
+
+#另外也可以继续使用/etc/resolv.conf
+#修改 /etc/NetworkManager/NetworkManager.conf 文件，在main部分添加 “dns=none” 选项：
+[main]
+plugins=ifcfg-rh
+dns=none
+#重启网卡
+systemctl restart NetworkManager.service
+```
+
+### 2.centos 查看时间及时区
+
+```
+date
+date -R
+
+## 修改gitlab 时区
+
+gitlab_rails['time_zone'] = 'Asia/Shanghai'
+```
+
+## pending
+
+## reference

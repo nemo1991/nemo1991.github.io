@@ -1,0 +1,129 @@
+﻿---
+title: "20170623"
+date: 2017-06-23
+category: ["daily","2017"]
+tags: ["gitlab","linux"]
+toc: true
+---
+gitlab omnibus install
+<!--more-->
+
+## resloved
+
+### 1.gitlab omnibus install
+```shell
+# config file path
+cat /etc/gitlab/gitlab.rb
+# package version file
+cat /opt/gitlab/version-manifest.txt.
+# template file
+# https://gitlab.com/gitlab-org/omnibus-gitlab/raw/master/files/gitlab-config-template/gitlab.rb.template
+#To view a diff between your configuration file and the latest version
+sudo gitlab-ctl diff-config
+# make config effective
+# The omnibus-gitlab will attempt to query the underlaying system in order to check which init system it uses. This manifests itself as a WARNING during the `sudo gitlab-ctl reconfigure` run.
+sudo gitlab-ctl reconfigure
+# get service status
+sudo gitlab-ctl status
+# Start all GitLab components
+sudo gitlab-ctl start
+# Stop all GitLab components
+sudo gitlab-ctl stop
+# Restart all GitLab components
+sudo gitlab-ctl restart
+# Tail all logs; press Ctrl-C to exit
+sudo gitlab-ctl tail
+#You can verify GitLab's ability to send emails properly using the Rails console. On the GitLab server, execute gitlab-rails console to enter the console. Then, you can enter the following command at the console prompt to cause GitLab to send a test email:
+sudo gitlab-rails console
+> Notify.test_email('destination_email@address.com', 'Message Subject', 'Message Body').deliver_now
+```
+
+### 2.gitlab config
+
+```
+external_url "http://gitlab.example.com"
+
+gitlab_rails['gitlab_email_from'] = 'username@your domain'
+gitlab_rails['smtp_enable'] = true
+gitlab_rails['smtp_address'] = "smtpdm.aliyun.com"
+gitlab_rails['smtp_port'] = 80
+gitlab_rails['smtp_user_name'] = "username@your domain"
+gitlab_rails['smtp_password'] = "password"
+gitlab_rails['smtp_domain'] = "your domain"
+gitlab_rails['smtp_authentication'] = "login"
+```
+
+### 3.aliyun enterprise mail host and port
+
+>企业云邮箱各个服务器地址及端口信息如下：
+
+>收件服务器地址：
+
+>POP 服务器地址：pop3.mxhichina.com 端口110，SSL 加密端口995
+
+>或
+
+>IMAP 服务器地址：imap.mxhichina.com 端口143，SSL 加密端口993
+
+>发件服务器地址：
+
+>SMTP 服务器地址：smtp.mxhichina.com 端口25， SSL 加密端口46
+>
+
+企业云邮箱默认 SMTP 发信功能已经开启，使用企业邮箱使用与 SMTP 程序进行发信时，涉及的邮箱服务器和设置方法如下：
+
+1、 SMTP 服务器名称smtp.mxhichina.com，或者smtp.您的邮箱域名；
+
+2、 SMTP 服务器端口：25（SSL加密端口为465）；
+
+3、 SMTP 身份验证：必须勾选
+
+4、 SMTP 认证登录用户名（发信邮箱地址）：正确、完整的阿里云企业邮箱账号名称，如postmaster@abc.com
+
+
+### 4.ubuntu apt-get install error
+```
+Could not get lock /var/lib/dpkg/lock
+E: Could not get lock /var/lib/dpkg/lock - open (11: Resource temporarily unavailable)
+E: Unable to lock the administration directory (/var/lib/dpkg/), is another process using it?
+```
+`remove lock file`
+
+```
+sudo rm /var/cache/apt/archives/lock
+sudo rm /var/lib/dpkg/lock
+
+```
+
+## pending
+
+### 1.Mattermost
+
+> mattermost 是一个 Slack 的开源替代品。Mattermost 采用 Go 语言开发，这是一个开源的团队通讯服务。为团队带来跨 PC 和移动设备的消息、文件分享，提供归档和搜索功能。
+
+
+### 2.Prometheus
+> Prometheus是一套开源的监控&报警&时间序列数据库的组合，起始是由SoundCloud公司开发的。随着发展，越来越多公司和组织接受采用Prometheus，社区也十分活跃，他们便将它独立成开源项目，并且有公司来运作。google SRE的书内也曾提到跟他们BorgMon监控系统相似的实现是Prometheus。现在最常见的Kubernetes容器管理系统中，通常会搭配Prometheus进行监控。
+
+
+### 3.centos7.0 firewall
+
+http://www.centoscn.com/image-text/install/2015/0101/4402.html
+
+### 4.ollydbg
+### 5.编写chrome插件，调用本地应用程序，并进行通讯（发送信息给应用程序）
+http://www.cnblogs.com/northhurricane/p/4019343.html
+
+### reference
+
+1. [Prometheus 系统监控方案 一][4]
+2. [Ubuntu 14.04下安装GitLab指南][0]
+3. [Upgrade to the package repository][1]
+4. [SMTP settings][2]
+5. [Omnibus GitLab documentation][3]
+
+[0]:http://www.open-open.com/lib/view/open1433584757328.html
+[1]:https://about.gitlab.com/upgrade-to-package-repository/
+[2]:https://docs.gitlab.com/omnibus/settings/smtp.html
+[3]:https://docs.gitlab.com/omnibus/README.html
+[4]:http://www.cnblogs.com/vovlie/p/Prometheus_CONCEPTS.html

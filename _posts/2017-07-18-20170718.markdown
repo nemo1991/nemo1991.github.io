@@ -1,0 +1,38 @@
+---
+title: "20170718"
+date: 2017-07-18 09:52:21
+category: ["daily","2017"]
+tags: ["mysql","nginx"]
+toc: true
+---
+听说刘邦是龙的儿子，= =ㄖㄙㄖ‖
+<!--more-->
+
+## resolved
+
+### 1. 离线安装mysql
+
+### 2. nginx 安装
+
+### 3. hexo 生成标签云页面
+
+```
+1. hexo new page tags
+2. page.path == "tags/index.html"
+3. use hexo tagcolud function
+<%- tagcloud({
+    min_font: 16, 
+    max_font: 35, 
+    amount: 999, 
+    color: true, 
+    start_color: 'gray', 
+    end_color: 'black',
+}) %>
+```
+## pending
+
+## reference
+
+1. [让 Hexo 自动生成 Tag Cloud 标签云页面][0]
+
+[0]:http://moxfive.xyz/2015/10/25/hexo-tag-cloud/

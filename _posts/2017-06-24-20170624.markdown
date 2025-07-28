@@ -1,0 +1,20 @@
+﻿---
+title: "20170624"
+date: 2017-06-24
+category: ["daily","2017"]
+tags: ["nltk"]
+toc: true
+---
+
+## resolved
+
+## pending
+
+### [NLTK][0]
+### [Tryton：一个通用商务框架][1]
+
+[0]:http://hao.jobbole.com/nltk/?utm_source=python.jobbole.com&utm_medium=sidebar-resources
+[1]:http://hao.jobbole.com/tryton/?utm_source=python.jobbole.com&utm_medium=sidebar-resources
+
+
+

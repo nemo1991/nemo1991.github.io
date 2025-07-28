@@ -1,0 +1,33 @@
+---
+title: "20170712"
+date: 2017-07-12 08:53:33
+category: ["daily","2017"]
+tags: ["linux","vim","nginx","asp.net"]
+toc: true
+---
+终于知道亮哥为什么每天要喝维他柠檬茶了，这东西太提神了
+<!--more-->
+`
+## resolved
+
+## pending
+
+## reference
+
+1. [centOS7下实践查询版本/CPU/内存/硬盘容量等硬件信息][0]
+2. [nginx 安装][1]
+3. [Nginx服务器搭建和基本配置详解][2]
+4. [.NET Core][3]
+5. [将VIM打造成强大的IDE][4]
+6. [ASP.NET Core tutorials][5]
+7. [linux的nohup命令的用法。][6]
+8. [如何在Windows 10安装和使用Linux的Bash shell][7]
+
+[0]:http://blog.csdn.net/dream_broken/article/details/52883883
+[1]:http://www.linuxidc.com/Linux/2016-09/134907.htm
+[2]:http://www.jb51.net/article/72527.htm
+[3]:https://docs.microsoft.com/zh-cn/dotnet/core/
+[4]:http://blog.csdn.net/windeal3203/article/details/40071641
+[5]:https://docs.microsoft.com/zh-cn/aspnet/core/tutorials/
+[6]:http://www.cnblogs.com/allenblogs/archive/2011/05/19/2051136.html
+[7]:http://jingyan.baidu.com/article/e73e26c0be8b6624adb6a7ba.html

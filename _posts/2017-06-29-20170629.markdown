@@ -1,0 +1,21 @@
+﻿---
+title: "20170629"
+date: 2017-06-29
+category: ["daily","2017"]
+tags: ["msbuild","(￣ε(#￣)"]
+toc: true
+---
+
+<!--more-->
+
+## resolved
+
+### 1.MSBuild
+> 1. Microsoft Build Engine 是一个用于生成应用程序的平台
+> 2. Visual Studio 会使用 MSBuild，但它不依赖于 Visual Studio。
+> 3. 属性值可通过重新定义属性进行更改
+> 4. 命令行中使用/property(/p)开关设置的属性称为全局属性,会覆盖项目中的属性，保留属性除外
+
+## pending
+
+## reference

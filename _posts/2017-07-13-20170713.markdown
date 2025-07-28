@@ -1,0 +1,15 @@
+---
+title: "20170713"
+date: 2017-07-13 11:13:33
+category: ["daily","2017"]
+tags: ["drawn"]
+toc: true
+---
+![](/assets/img/posts/20170713.png)
+<!--more-->
+
+## resolved
+
+## pending
+
+## reference

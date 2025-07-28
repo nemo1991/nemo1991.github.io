@@ -1,0 +1,23 @@
+﻿---
+title: "20170702"
+date: 2017-07-02
+category: ["daily","2017"]
+tags: ["python"]
+toc: true
+---
+就算我最后一无所有，也不缺从头再来的勇气
+<!--more-->
+
+## resolved
+
+### what's new in python 2.7
+
+1. PEP:372
+
+`ctrl+alt+r` firefox 阅读模式
+## pending
+
+## reference
+1. [`What’s New in Python 2.7`][0]
+
+[0]:https://docs.python.org/2/whatsnew/2.7.html

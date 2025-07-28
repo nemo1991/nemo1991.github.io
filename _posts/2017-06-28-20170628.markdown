@@ -1,0 +1,42 @@
+﻿---
+title: "20170628"
+date: 2017-06-28
+category: ["daily","2017"]
+tags: ["powershell","msbuild","javascript"]
+toc: true
+---
+powershell 执行命令路径中有空格如何处理
+<!--more-->
+## resolved
+
+### powershell 执行命令路径中有空格如何处理
+
+```shell
+# 使用双引号或单引号将路径及应用包住, 包住的内容起始加入&表示执行
+&'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin\MSBuild.exe' /consoleloggerparameters:ErrorsOnly /maxcpucount /nologo /property:Configuration=Release /verbosity:quiet "build\QingdaoBeer.CTS.sln"
+```
+
+### MSBuild编译报错 MSB3644
+
+### MSBuild Publish WebSite
+[How to Publish Web with msbuild?][1]
+
+### window.close 关闭浏览器窗口
+
+```js
+ window.open("","_self").close();
+```
+[Javascript:window.close()不起作用？][4]
+
+## pending
+
+### MSBuild 参数说明
+[使用命令行编译vs2010的工程][0]
+[MSBuild的简单介绍与使用][2]
+[MSBuild][3]
+
+[0]:http://blog.csdn.net/renzhegzs/article/details/47603799
+[1]:https://stackoverflow.com/questions/3097489/how-to-publish-web-with-msbuild
+[2]:http://www.cnblogs.com/shanyou/p/3452938.html
+[3]:https://docs.microsoft.com/zh-cn/visualstudio/msbuild/msbuild
+[4]:http://blog.csdn.net/hantiannan/article/details/7402621

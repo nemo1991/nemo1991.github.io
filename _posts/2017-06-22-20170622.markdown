@@ -1,0 +1,73 @@
+﻿---
+title: "20170622"
+date: 2017-06-22
+category: ["daily","2017"]
+tags: ["linux"]
+toc: true
+---
+
+刚安装好的ubuntu系统使用sudo apt-get install openssh-server 报错
+<!--more-->
+
+## resolved
+### 1. ubuntu 安装应用命令
+
+刚安装好的ubuntu系统使用sudo apt-get install openssh-server 报错
+
+>Package openssh-server is not available, but is referred to by  another package
+
+在UBUNTU下，我们维护一个源列表，源列表里面都是一些网址信息，这每一条网址就是一个源，这个地址指向的数据标识着这台源服务器上有哪些软件可以安装使用
+
+```shell
+# 源列表文件
+sudo cat /etc/apt/sources.list
+# 更新源中 应用列表
+sudo apt-get update
+# 与本地安装的应用版本对比, 更新应用
+# 慎用 upgrade, 如果源里面有系统更新的话，会将系统一并更新掉
+sudo apt-get upgrade
+```
+
+### 2. ubuntu 网络接口配置文件
+
+```shell
+# 接口配置文件
+cat /etc/network/interfaces
+# auto 开机自动挂载
+auto lo
+# 重启网卡
+/etc/init.d/networking restart
+# 使修改配置生效优点是不影响其他网络接口
+sudo ifdown eth0
+sudo ifup eth0
+# ubuntu dns信息保存在/etc/resolv.conf但不能直接编辑
+# 在ubuntu中dns信息是放在/etc/resolvconf/resolv.conf.d/目录下一般情况下这个目录下有base和head两个文件夹
+vim /etc/resolvconf/resolv.conf.d/base
+nameserver 8.8.8.8
+nameserver 114.114.114.114
+#保存后执行
+resolvconf -u
+#用以下命令使网络设置生效
+service networking restart
+sudo /etc/init.d/networking restart
+```
+
+## pending
+
+1. 如何在Linux系统中安装离线应用
+2. 子网掩码是做什么用的
+3. 网络基本功
+4. 游戏修改器的制作原理？
+
+### reference
+1. [ubuntu网络配置初步/etc/network][3]
+2. [ubuntu 网络配置][4]
+3. [游戏修改器的制作原理？][0]
+4. [网络基本功][1]
+5. [Linux网络接口配置文件ifcfg-eth0解析][2]
+
+[3]:http://www.2cto.com/os/201404/292853.html
+[4]:http://www.cnblogs.com/yudar/p/4446975.html
+[0]:https://www.zhihu.com/question/25698941
+[1]:https://wizardforcel.gitbooks.io/network-basic/content/11.html
+[2]:http://blog.csdn.net/jmyue/article/details/17288467
