@@ -1,0 +1,26 @@
+---
+title:  "20250729"
+date:   2025-07-29 09:29:00 +0800
+categories: ["daily","2025"]
+tags: ["paddle","paddleocr"]
+---
+
+paddleocr v4模型识别率已经很高了
+
+
+图灵完备性
+
+图灵机
+
+mcp是什么 大模型上下文协议
+
+中国行政区划
+
+__init__.py 文件作用
+
+[中华人民共和国民政部-数据](https://www.mca.gov.cn/n156/n186/index.html)
+# References
+
+[图灵完备性](https://zh.wikipedia.org/wiki/%E5%9C%96%E9%9D%88%E5%AE%8C%E5%82%99%E6%80%A7)
+[mcp market](https://mcpmarket.com/zh)
+[一文看懂：MCP(大模型上下文协议)](https://zhuanlan.zhihu.com/p/27327515233)
