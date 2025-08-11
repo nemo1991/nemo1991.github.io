@@ -2,7 +2,7 @@
 title: ["20170714"]
 date: 2017-07-14 09:16:09
 category: ["daily","2017"]
-tags: ["asp.net","etl","vscode","mysql"]
+tags: ["asp.net","etl","visiual code","mysql"]
 toc: true
 ---
 我喜欢刚割完草后的味道，是因为像极刚行刑完后的刑场

@@ -2,7 +2,7 @@
 title: "20170629"
 date: 2017-06-29
 category: ["daily","2017"]
-tags: ["msbuild","(￣ε(#￣)"]
+tags: ["msbuild"]
 toc: true
 ---
 
