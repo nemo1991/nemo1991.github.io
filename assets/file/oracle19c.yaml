@@ -1,0 +1,67 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: oracle19c
+  labels:
+    name: oracle19c
+spec:
+  replicas: 1
+  selector:
+    name: oracle19c
+  template:
+    metadata:
+      labels:
+        name: oracle19c
+    spec:
+      containers:
+      - name: oracle19c
+        image: container-registry.oracle.com/database/adb-free:latest
+        securityContext:
+          capabilities:
+            add: ["SYS_ADMIN"]
+        ports:
+        - containerPort: 1521
+        - containerPort: 1522
+        - containerPort: 8443
+        - containerPort: 27017
+        volumeMounts:
+        - name: oracle19c-data
+          mountPath: /u01/data
+        env:
+        - name: DATABASE_NAME
+          value: ""
+        - name: ADMIN_PASSWORD
+          value: ""
+        - name: WALLET_PASSWORD
+          value: ""
+        - name: ENABLE_ARCHIVE_LOG
+          value: "false"
+      volumes:
+      - name: oracle19c-data
+        nfs:
+          server: 192.168.50.190
+          path: /data/nfs/oracle19c
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: oracle19c
+  labels:
+    name: oracle19c
+spec:
+  ports:
+  - name: tls
+    port: 1521
+    targetPort: 1521
+    nodePort: 1521
+  - name: mtls
+    port: 1522
+    targetPort: 1522
+  - name: https
+    port: 8443
+    targetPort: 8443
+  - name: mongo
+    port: 27017
+    targetPort: 27017
+  selector:
+    name: oracle19c

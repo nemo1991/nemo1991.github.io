@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国土地荒漠化治理：从“沙进人退”到“人进沙退”</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Chosen Palette: Earthy Harmony -->
+    <!-- Application Structure Plan: 本应用采用主题式仪表盘结构，而非简单复刻报告章节。顶部为导航栏，引导用户快速跳转至核心板块：1.【总览】通过关键数据和核心图表，展示荒漠化治理的历史性转折，让用户第一时间掌握核心成就。2.【治理历程】采用交互式时间轴，将漫长的历史阶段化，用户通过点击即可探索不同时期的重点，提升探索感。3.【典型模式】通过标签页对比展示三大治理模式，便于用户理解不同策略的特点与成效。4.【2007年：转折点】聚焦关键年份，提炼舆论与政策的深度转变，揭示治理理念的升华。5.【未来展望】以卡片形式清晰呈现挑战与建议。此结构旨在引导用户从宏观到微观，从历史到未来，逐步深入，符合认知规律，最大化提升信息吸收效率。 -->
+    <!-- Visualization & Content Choices: 1.【荒漠化面积变化】(报告核心数据) -> 目标:展示趋势变化 -> 方式:动态折线图 -> 交互:鼠标悬停显示具体年份数据 -> 理由:直观展示“沙进人退”到“人进沙退”的转折点，最具视觉冲击力 -> 库:Chart.js。2.【治理历程】(报告第一、二、三部分) -> 目标:组织历史信息 -> 方式:HTML/CSS/JS实现的交互式时间轴 -> 交互:点击年份标签切换内容 -> 理由:避免信息堆砌，让用户主动探索，增强参与感。3.【典型模式对比】(报告第三部分表格) -> 目标:比较不同方案 -> 方式:标签页+卡片+简洁文字 -> 交互:点击标签切换案例 -> 理由:结构清晰，便于横向对比三大模式的核心理念与成效。4.【未来挑战与建议】(报告第四部分) -> 目标:告知未来方向 -> 方式:图标+卡片 -> 交互:无，以清晰传达为目的 -> 理由:视觉化呈现要点，易于记忆和理解。所有图表均使用Canvas渲染。 -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            background-color: #FDFBF5;
+            color: #4A4A4A;
+        }
+        .bg-earth-tan { background-color: #FDFBF5; }
+        .bg-earth-green { background-color: #EBF0E4; }
+        .text-earth-dark-green { color: #4A5C3C; }
+        .text-earth-brown { color: #6B4F4F; }
+        .border-earth-green { border-color: #A9C7A9; }
+        .accent-earth-green { background-color: #A9C7A9; }
+        .nav-link {
+            padding: 8px 16px;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .nav-link:hover, .nav-link.active {
+            background-color: #4A5C3C;
+            color: #FFFFFF;
+        }
+        .timeline-item {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 4px solid transparent;
+        }
+        .timeline-item.active {
+            color: #4A5C3C;
+            border-bottom-color: #4A5C3C;
+            transform: translateY(-2px);
+        }
+        .case-study-tab {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        .case-study-tab.active {
+            color: #4A5C3C;
+            border-bottom-color: #4A5C3C;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 50vh;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-earth-tan">
+
+    <header class="sticky top-0 bg-earth-tan/80 backdrop-blur-lg z-50 shadow-sm">
+        <nav class="container mx-auto px-4 py-3">
+            <div class="flex flex-col sm:flex-row justify-between items-center">
+                <h1 class="text-xl md:text-2xl font-bold text-earth-dark-green mb-2 sm:mb-0">中国荒漠化治理的伟大转折</h1>
+                <div class="flex flex-wrap justify-center space-x-1 md:space-x-2 text-sm md:text-base">
+                    <a class="nav-link" data-target="overview">总览</a>
+                    <a class="nav-link" data-target="timeline">治理历程</a>
+                    <a class="nav-link" data-target="cases">典型模式</a>
+                    <a class="nav-link" data-target="turning-point">2007年：转折点</a>
+                    <a class="nav-link" data-target="future">未来展望</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 md:py-12">
+
+        <section id="overview" class="text-center mb-16 md:mb-24">
+            <h2 class="text-3xl md:text-4xl font-bold text-earth-dark-green mb-4">从“沙进人退”到“人进沙退”</h2>
+            <p class="max-w-3xl mx-auto text-earth-brown mb-8">自20世纪末以来，中国通过不懈努力，成功实现了荒漠化土地面积由扩张到净减少的历史性转变，谱写了世界生态治理史上的绿色奇迹。</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-12">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <p class="text-4xl font-bold text-earth-dark-green" id="stat1">0</p>
+                    <p class="text-earth-brown mt-2">万平方公里 荒漠化土地</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <p class="text-4xl font-bold text-earth-dark-green" id="stat2">0</p>
+                    <p class="text-earth-brown mt-2">万公顷 年均缩减 (21世纪初)</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <p class="text-4xl font-bold text-earth-dark-green" id="stat3">0</p>
+                    <p class="text-earth-brown mt-2">个 “三北工程”攻坚战区</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-4 sm:p-6 rounded-lg shadow-xl">
+                <h3 class="text-xl font-bold text-earth-dark-green mb-4">全国荒漠化土地面积变化趋势</h3>
+                <p class="text-sm text-gray-500 mb-4">数据显示，21世纪初是中国荒漠化防治的关键转折点，土地面积从此前的持续扩张转为净减少。</p>
+                <div class="chart-container">
+                    <canvas id="desertificationChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="timeline" class="mb-16 md:mb-24">
+            <h2 class="text-3xl md:text-4xl font-bold text-earth-dark-green text-center mb-12">一部波澜壮阔的绿色史诗</h2>
+            <div class="w-full bg-white rounded-lg shadow-lg p-6 md:p-8">
+                <div class="flex justify-around border-b-2 border-gray-200 mb-6">
+                    <div class="timeline-item active py-2 px-4 font-semibold text-gray-600" data-period="1950s-1980s">1950-80s: 探索与奠基</div>
+                    <div class="timeline-item py-2 px-4 font-semibold text-gray-600" data-period="1990s-2010s">1990-2010s: 转折与多元</div>
+                    <div class="timeline-item py-2 px-4 font-semibold text-gray-600" data-period="2010s-present">2010s至今: 系统治理</div>
+                </div>
+                <div id="timeline-content" class="fade-in">
+                </div>
+            </div>
+        </section>
+
+        <section id="cases" class="mb-16 md:mb-24">
+            <h2 class="text-3xl md:text-4xl font-bold text-earth-dark-green text-center mb-12">因地制宜的中国智慧</h2>
+            <p class="max-w-3xl mx-auto text-earth-brown text-center mb-8">中国治沙的成功并非依赖单一模式，而是在国家宏观指导下，将宏大的国家战略与具体的区域特点、市场活力和公民参与有机结合的结果。点击下方标签，探索不同地区的成功实践。</p>
+            <div class="w-full bg-white rounded-lg shadow-lg p-6 md:p-8">
+                <div class="flex justify-center border-b-2 border-gray-200 mb-6 space-x-4 md:space-x-8">
+                    <div class="case-study-tab active py-2 px-2 md:px-4 font-bold" data-case="maowusu">毛乌素：人民的力量</div>
+                    <div class="case-study-tab py-2 px-2 md:px-4 font-bold" data-case="minqin">民勤：水的智慧</div>
+                    <div class="case-study-tab py-2 px-2 md:px-4 font-bold" data-case="kubuqi">库布其：市场的活力</div>
+                </div>
+                <div id="case-study-content" class="fade-in">
+                </div>
+            </div>
+        </section>
+
+        <section id="turning-point" class="mb-16 md:mb-24 bg-earth-green p-6 md:p-10 rounded-lg shadow-md">
+            <h2 class="text-3xl md:text-4xl font-bold text-earth-dark-green text-center mb-8">2007年：一个关键的转折点</h2>
+            <p class="max-w-3xl mx-auto text-earth-brown text-center mb-10">2007年，国家高层将防沙治沙提升至前所未有的战略高度，舆论焦点集中，治理理念发生深刻转变，标志着中国治沙工作从“工程治理”迈向“系统性、法制化治理”的新阶段。</p>
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="bg-white/70 p-6 rounded-lg">
+                    <h3 class="font-bold text-earth-dark-green text-lg mb-4">高层声音与国家意志</h3>
+                    <blockquote class="border-l-4 border-earth-green pl-4 italic text-earth-brown">
+                        <p>“决不能让民勤成为第二个罗布泊。”</p>
+                        <p>“胡杨活着一千年不死，死了一千年不倒，倒了一千年不朽。这就是中华民族坚韧不拔精神的写照。”</p>
+                        <cite class="block text-right mt-2 not-italic text-sm">- 温家宝总理, 2007年全国防沙治沙大会</cite>
+                    </blockquote>
+                </div>
+                <div class="bg-white/70 p-6 rounded-lg">
+                    <h3 class="font-bold text-earth-dark-green text-lg mb-4">理念的升华</h3>
+                    <div class="flex items-center justify-around text-center">
+                        <div class="w-2/5">
+                            <p class="font-semibold text-earth-brown">单一工程治理</p>
+                            <p class="text-xs text-gray-500">(植树造林为主)</p>
+                        </div>
+                        <div class="text-2xl font-bold text-earth-dark-green">→</div>
+                        <div class="w-2/5">
+                            <p class="font-semibold text-earth-dark-green">系统性、法制化治理</p>
+                            <p class="text-xs text-gray-500">(与气候、水资源、经济民生协同)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="future" class="text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-earth-dark-green mb-4">挑战与未来</h2>
+            <p class="max-w-3xl mx-auto text-earth-brown mb-12">治沙成果仍是初步和阶段性的，未来工作将从“量”的扩张转向“质”的提升，巩固成果，发展可持续的沙区经济，为全球提供更多“中国方案”。</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-4xl mb-4">💧</div>
+                    <h3 class="text-lg font-bold text-earth-dark-green mb-2">水资源制约</h3>
+                    <p class="text-sm text-earth-brown">将“以水定绿”作为首要原则，加强水资源总量控制和科学调配。</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-4xl mb-4">💰</div>
+                    <h3 class="text-lg font-bold text-earth-dark-green mb-2">可持续生计</h3>
+                    <p class="text-sm text-earth-brown">健全生态补偿机制，发展特色经济林、生态旅游等，将生态效益转化为经济效益。</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-4xl mb-4">🛰️</div>
+                    <h3 class="text-lg font-bold text-earth-dark-green mb-2">科技创新赋能</h3>
+                    <p class="text-sm text-earth-brown">推广遥感、大数据等技术，发展智慧治沙模式，提高治理的科学性和精准性。</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-4xl mb-4">🤝</div>
+                    <h3 class="text-lg font-bold text-earth-dark-green mb-2">多元化参与</h3>
+                    <p class="text-sm text-earth-brown">鼓励企业、社会组织和个人参与，形成政府、企业、社会共同参与的治理格局。</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="text-center py-6 mt-12 border-t border-gray-200">
+        <p class="text-sm text-gray-500">基于《中国土地荒漠化防治历程》及《2007年中国土地荒漠化舆论生态》报告生成。</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const timelineData = {
+                '1950s-1980s': {
+                    title: '探索与奠基：国家动员下的初步尝试',
+                    content: '新中国成立初期，面对严峻的风沙灾害，国家以强大的动员能力开启了有组织的治沙工作。这一时期诞生了“麦草方格”等关键技术，并启动了宏大的“三北”防护林工程，为后续治理奠定了制度和技术基础。',
+                    points: [
+                        '1958年，国务院成立治沙领导小组，标志着国家层面工作的开始。',
+                        '宁夏中卫发明“麦草方格”固沙技术，成功保障包兰铁路畅通。',
+                        '1978年，启动《三北防护林体系建设工程》，被誉为“绿色长城”。',
+                        '80年代，推行“五荒到户”等激励政策，调动了群众积极性。'
+                    ]
+                },
+                '1990s-2010s': {
+                    title: '转折与多元：从“沙进人退”到“人进沙退”',
+                    content: '世纪之交，中国荒漠化防治迎来历史性转折，土地面积首次实现净减少。治理理念发生深刻演变，从单纯植树造林转向“以水定绿”的科学思维，同时涌现出企业主导、市场化运作等多元化治理模式。',
+                    points: [
+                        '21世纪初，荒漠化土地由年均扩张104万公顷转为年均缩减75.85万公顷。',
+                        '甘肃民勤的实践证明了“治沙先治水”理念的正确性。',
+                        '内蒙古库布其沙漠探索出“产业带动治沙”的库布其模式。',
+                        '石光银、殷玉珍等个人英雄的事迹，成为时代精神的象征。'
+                    ]
+                },
+                '2010s-present': {
+                    title: '系统治理：迈向生态文明新时代',
+                    content: '党的十八大以来，生态文明建设被提升到前所未有的高度。“山水林田湖草沙”一体化保护和系统治理成为核心理念。治沙工作更加注重整体性、协同性和科学性，科技赋能成为重要推动力。',
+                    points: [
+                        '提出“山水林田湖草沙”一体化保护和系统治理理念。',
+                        '2023年，启动“三北”工程三大标志性战役，强调区域联防联治。',
+                        '遥感、无人机植树等高新技术被广泛应用于监测和治理。',
+                        '光伏治沙、以路治沙等新模式将生态治理与乡村振兴、能源发展紧密结合。'
+                    ]
+                }
+            };
+
+            const caseStudiesData = {
+                maowusu: {
+                    title: '毛乌素沙地：政府主导，全民参与',
+                    content: '作为曾经的“沙都”，毛乌素的治理是中国人民几十年不懈奋斗的缩影。通过政府主导下的禁牧休牧、舍饲圈养，结合“五荒到户”政策激发个人与集体的力量，成功将不毛之地变为绿洲。',
+                    keyMetric: '林木覆盖率从0.9%提高到34.8%，治理率接近70%。'
+                },
+                minqin: {
+                    title: '民勤绿洲：政府干预，以水定绿',
+                    content: '地处两大沙漠交汇处的民勤，曾因过度用水面临消失的风险。2007年后，在国家强力干预下，推行史上最严控水措施，关井压田，科学分配水权，成功让干涸51年的青土湖重现碧波，验证了“治沙先治水”的真理。',
+                    keyMetric: '成功阻隔两大沙漠合拢，形成106平方公里旱区湿地。'
+                },
+                kubuqi: {
+                    title: '库布其沙漠：企业主导，市场运作',
+                    content: '亿利集团在库布其探索出一条独特的市场化治沙道路。通过发展生态修复、生态旅游、光伏治沙等沙产业，形成了“以产业带动治沙，以治沙促进产业”的良性循环，实现了生态、经济、民生效益的三赢。',
+                    keyMetric: '绿化沙漠5000平方公里，带动当地农牧民人均年收入增至3万多元。'
+                }
+            };
+
+            const timelineContainer = document.getElementById('timeline-content');
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            
+            function updateTimelineContent(period) {
+                const data = timelineData[period];
+                timelineContainer.innerHTML = `
+                    <h3 class="text-xl md:text-2xl font-bold text-earth-dark-green mb-4">${data.title}</h3>
+                    <p class="text-earth-brown mb-6">${data.content}</p>
+                    <ul class="list-disc list-inside space-y-2 text-earth-brown">
+                        ${data.points.map(point => `<li>${point}</li>`).join('')}
+                    </ul>
+                `;
+                timelineItems.forEach(item => {
+                    item.classList.toggle('active', item.dataset.period === period);
+                });
+            }
+
+            timelineItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    updateTimelineContent(item.dataset.period);
+                });
+            });
+
+            const caseStudyContainer = document.getElementById('case-study-content');
+            const caseStudyTabs = document.querySelectorAll('.case-study-tab');
+
+            function updateCaseStudyContent(caseName) {
+                const data = caseStudiesData[caseName];
+                caseStudyContainer.innerHTML = `
+                    <h3 class="text-xl md:text-2xl font-bold text-earth-dark-green mb-4">${data.title}</h3>
+                    <p class="text-earth-brown mb-4">${data.content}</p>
+                    <div class="bg-earth-green p-4 rounded-lg">
+                        <p class="font-semibold text-earth-dark-green">核心成效：<span class="font-normal">${data.keyMetric}</span></p>
+                    </div>
+                `;
+                caseStudyTabs.forEach(tab => {
+                    tab.classList.toggle('active', tab.dataset.case === caseName);
+                });
+            }
+
+            caseStudyTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    updateCaseStudyContent(tab.dataset.case);
+                });
+            });
+
+            updateTimelineContent('1950s-1980s');
+            updateCaseStudyContent('maowusu');
+
+            const ctx = document.getElementById('desertificationChart').getContext('2d');
+            const chartData = {
+                labels: ['1990s末', '2004', '2009', '2014', '2019'],
+                datasets: [{
+                    label: '荒漠化土地年均变化面积 (万公顷)',
+                    data: [104, -75.85, -17.17, -24.24, -20.31],
+                    borderColor: '#4A5C3C',
+                    backgroundColor: 'rgba(74, 92, 60, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#4A5C3C',
+                    pointRadius: 5,
+                    pointHoverRadius: 8
+                }]
+            };
+            new Chart(ctx, {
+                type: 'line',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            title: {
+                                display: true,
+                                text: '年均变化面积 (万公顷, +为扩张, -为缩减)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        const value = context.parsed.y;
+                                        label += value > 0 ? `扩张 ${value} 万公顷` : `缩减 ${-value} 万公顷`;
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            function animateValue(obj, start, end, duration) {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    obj.innerHTML = Math.floor(progress * (end - start) + start).toLocaleString();
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            }
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateValue(document.getElementById('stat1'), 0, 263, 2000);
+                        animateValue(document.getElementById('stat2'), 0, 75, 2000);
+                        animateValue(document.getElementById('stat3'), 0, 3, 2000);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            observer.observe(document.getElementById('stat1'));
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('data-target');
+                    const targetElement = document.getElementById(targetId);
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 90) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-target') === current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>
