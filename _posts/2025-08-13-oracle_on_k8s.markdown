@@ -1,11 +1,11 @@
 ---
-title:  "20250813"
+title:  "oracle on k8s"
 date:   2025-08-13 09:24:00 +0800
 categories: ["tech","k8s"]
 tags: ["oracle","k8s"]
 ---
 
-tarage: run oracle on k8s for develop.
+target: run oracle on k8s for develop.
 
 version: 19c
 
@@ -29,16 +29,16 @@ Oracle 官方的镜像仓库:https://container-registry.oracle.com/
 | enterprise-ru | Oracle Database Enterprise Edition  |
 | rac-ru | Oracle Real Application Cluster Release Update Container Images |
 
-adb-free edition 中有19c版本，存储库大小限制为20GB
+adb-free edition 中有19c版本，存储库大小限制为20GB，作为开发目的，完全够用  
 latest 标签是19c版本，最低需要4CPU 8G内存 
-container-registry.oracle.com/database/adb-free:latest
-
-adb-free 镜像大小为1.5G,拉取不需要身份验证。
+container-registry.oracle.com/database/adb-free:latest  
+adb-free 镜像大小为1.5G,拉取不需要身份验证  
 
 # mt2. 部署容器
+
 ## 可用环境变量
-|Environment variable |	Description |
-| --- | --- |
+| Environment variable |	Description |
+| ---- | --- |
 | WORKLOAD_TYPE |	Can be either ATP or ADW. Default value is ATP |
 | DATABASE_NAME	| Database name should contain only alphanumeric characters. if not provided, the Database will be called either MYATP or MYADW depending on the passed workload type|
 |ADMIN_PASSWORD |	Admin user password must be between 12 and 30 characters long and must include at least one uppercase letter, one lowercase letter, and one numeric. The password cannot contain username |
@@ -46,12 +46,12 @@ adb-free 镜像大小为1.5G,拉取不需要身份验证。
 | ENABLE_ARCHIVE_LOG |	To enable archive logging in the database. Default value is True. To turn off archive logging set the value to False |
 
 ## 端口
-|Port|	Description|
-| --- | --- |
-|1521|	TLS|
-|1522|	mTLS|
-|8443|	HTTPS port for ORDS / APEX and Database Actions|
-|27017|	Mongo API|
+| Port |	Description |
+| ---- | ---- |
+| 1521 |	TLS |
+| 1522 |	mTLS |
+| 8443 |	HTTPS port for ORDS / APEX and Database Actions |
+| 27017 |	Mongo API |
 
 ## 卷
 adb_container_volume:/u01/data
@@ -86,13 +86,14 @@ podman --device 参数用于将主机设备添加到容器或Pod中。通过该�
 权限(可选):
 指定设备的访问权限，可以使用 r (读), w (写), m (mknod) 组合，例如 rwm 表示读、写和mknod权限。
 
-## kubectl进入容器
+## kubectl 一些操作
+```shell
 kubectl exec -ti <your-pod-name>  -n <your-namespace>  -- /bin/sh
 
 kubectl expose replication/oracle19c --type="NodePort" --port 1521
+```
 
 ![alt text](<../assets/img/posts/2025-08-13-oracle on k8s/image-2.png>)
-
 
 [Oracle Database 19c on Kubernetes with Portworx storage](https://ronekins.com/2020/11/06/oracle-database-19c-on-kubernetes-with-portworx-storage/)
 [autonomous-database-container-free](https://docs.oracle.com/en-us/iaas/autonomous-database-serverless/doc/autonomous-database-container-free.html#GUID-03B5601E-E15B-4ECC-9929-D06ACF576857)
