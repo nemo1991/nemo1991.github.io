@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>韩立：凡人修仙之路的起点</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: Warm Neutral Harmony -->
+    <!-- Application Structure Plan: The application is designed as a vertical, single-page timeline, guiding the user chronologically through the key stages of Han Li's early life. This structure was chosen over a dashboard or thematic sections because the source material is a strong linear narrative. A timeline best reflects the cause-and-effect progression of his journey, from a mortal boy to a cultivator. Key interactions include scrolling through major life events, clicking on key terms/characters to reveal more details in modals, and viewing a simple chart that visualizes his slow initial progress. This user flow is intuitive, encourages exploration, and makes the dense narrative text easily digestible by breaking it into thematic, chronological chunks. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Han Li's family background. Goal: Inform. Viz/Method: Styled HTML text blocks. Interaction: None. Justification: Clear, direct presentation of qualitative information. Library: Tailwind CSS.
+        - Report Info: Social hierarchy on the carriage. Goal: Organize/Compare. Viz/Method: A simple diagram built with HTML/Tailwind divs. Interaction: None. Justification: Visually represents social strata more effectively than a list. Library: Tailwind CSS.
+        - Report Info: Seven Mysteries Sect entrance trial. Goal: Show Change/Process. Viz/Method: A vertical "progress" indicator made with HTML/Tailwind. Interaction: Highlighting current stage on scroll. Justification: Creates a more dynamic and engaging representation of the arduous trial. Library: Tailwind CSS.
+        - Report Info: Han Li's cultivation progress with the nameless chant. Goal: Compare/Show Change. Viz/Method: Chart.js Line Chart. Interaction: Tooltip on hover. Justification: A chart provides a stark visual comparison between his slow progress and the expected power of other techniques, emphasizing his unique and difficult start. Library: Chart.js.
+        - Report Info: Key characters (Doctor Mo) and items (Green Bottle). Goal: Inform/Detail. Viz/Method: Clickable elements triggering modal pop-ups. Interaction: Click to show/hide detailed descriptions. Justification: Keeps the main timeline clean while allowing users to drill down for more context on crucial elements. Library: Vanilla JS + Tailwind CSS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', 'Helvetica Neue', 'Arial', 'sans-serif';
+            background-color: #FDFBF8;
+            color: #4A4A4A;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 24px;
+            left: -21px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: #D1C4E9;
+            border: 3px solid #FDFBF8;
+        }
+        .timeline-item:hover::before {
+            background-color: #9575CD;
+        }
+        .modal {
+            transition: opacity 0.3s ease;
+        }
+        .chart-container {
+            position: relative; 
+            width: 100%; 
+            max-width: 600px; 
+            margin-left: auto; 
+            margin-right: auto; 
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container { 
+                height: 350px; 
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <header class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 tracking-tight">韩立：凡人修仙之路的起点</h1>
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">一份交互式时间轴，梳理《凡人修仙传》主角韩立从山村少年到踏入仙途的早期关键经历。</p>
+        </header>
+
+        <nav class="sticky top-0 bg-[#FDFBF8]/80 backdrop-blur-md z-10 py-4 mb-12 border-b border-gray-200">
+            <ul class="flex justify-center space-x-4 sm:space-x-8">
+                <li><a href="#section-1" class="text-gray-600 hover:text-[#9575CD] transition-colors duration-300 font-medium">凡人篇</a></li>
+                <li><a href="#section-2" class="text-gray-600 hover:text-[#9575CD] transition-colors duration-300 font-medium">入门篇</a></li>
+                <li><a href="#section-3" class="text-gray-600 hover:text-[#9575CD] transition-colors duration-300 font-medium">修仙篇</a></li>
+                <li><a href="#section-4" class="text-gray-600 hover:text-[#9575CD] transition-colors duration-300 font-medium">机缘篇</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <div class="relative border-l-2 border-dashed border-gray-300 ml-5">
+                
+                <!-- Section 1: 凡人篇 -->
+                <section id="section-1" class="mb-16 timeline-item pl-10">
+                    <h2 class="text-2xl font-bold text-gray-700 mb-2">凡人世界：务实与抱负的萌芽</h2>
+                    <p class="text-sm text-gray-500 mb-4">年龄：10岁 | 地点：山边小村</p>
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+                        <p class="mb-4">本节将深入探讨韩立的凡人时期，从其童年家庭环境、独特绰号的由来，到他内心世界的真实写照，为他未来踏上修仙之路的性格特质奠定基础。</p>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h3 class="font-semibold text-lg mb-2 text-[#673AB7]">卑微的出身</h3>
+                                <p class="text-gray-600">韩立出身于一个贫困的七口之家，排行第四。家庭清苦，温饱都是问题。他的父母是朴实的农民，最大的期望就是孩子能成为一名手艺学徒，吃穿不愁。这种环境塑造了他极为务实的性格，其早期的所有梦想都围绕着“挣钱”和改善家人生活。</p>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg mb-2 text-[#673AB7]">“二愣子”的内心</h3>
+                                <p class="text-gray-600">他在村里被称为“二愣子”，一个他并不喜欢的绰号。但这普通乃至有些愚钝的外号，恰好掩盖了他远超同龄人的聪慧与早熟。他外表平平无奇，内心却向往着山村外的繁华世界。这种内外反差，成为他天然的“保护色”。</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 2: 入门篇 -->
+                <section id="section-2" class="mb-16 timeline-item pl-10">
+                    <h2 class="text-2xl font-bold text-gray-700 mb-2">江湖门派：踏入七玄门</h2>
+                    <p class="text-sm text-gray-500 mb-4">年龄：10岁 | 地点：七玄门</p>
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+                        <p class="mb-4">本节将聚焦于韩立从山村到七玄门的过程，详细阐述他所见识的江湖世界的阶级分化、权力运作，以及他所进入的七玄门背后的真实处境。</p>
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="font-semibold text-lg mb-2 text-[#673AB7]">命运的转折</h3>
+                                <p class="text-gray-600">韩立的三叔为他争取到了参加“七玄门”内门弟子考验的机会。对于韩立和他的家人而言，这是一个能“挣大钱”的天赐良机。每月一两多的散银子，是他们无法想象的财富。正是这个极其现实的理由，将韩立推上了日后完全不同的仙业大道。</p>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg mb-2 text-[#673AB7]">炼骨崖的残酷试炼</h3>
+                                <p class="text-gray-600">入门考验远比想象中残酷。韩立身体素质平平，但凭借一股不服输的狠劲和坚韧的毅力，虽未在规定时间内完成，却因“表现突出”而被收为记名弟子。这次考验，是他第一次依靠精神力量战胜身体极限。</p>
+                            </div>
+                            <div class="text-center p-4 bg-gray-50 rounded-lg">
+                                <h4 class="font-medium mb-3">关键人物出现</h4>
+                                <p class="text-gray-600">正当韩立以为自己将成为普通弟子时，一个关键人物的出现，再次改变了他的命运。</p>
+                                <button onclick="openModal('mo-dafu-modal')" class="mt-3 bg-[#9575CD] text-white px-4 py-2 rounded-lg hover:bg-[#7E57C2] transition-colors duration-300">认识墨大夫</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 3: 修仙篇 -->
+                <section id="section-3" class="mb-16 timeline-item pl-10">
+                    <h2 class="text-2xl font-bold text-gray-700 mb-2">仙道之始：无名口诀</h2>
+                    <p class="text-sm text-gray-500 mb-4">年龄：10岁 | 地点：神手谷</p>
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+                        <p class="mb-4">本节将详细记录韩立成为墨大夫记名弟子后的经历，重点关注他修炼“无名口诀”时所遭遇的困惑，以及他与墨大夫之间看似疏离实则另有深意的师徒关系。</p>
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="font-semibold text-lg mb-2 text-[#673AB7]">口诀的困惑与坚持</h3>
+                                <p class="text-gray-600">墨大夫传授了一套无名口诀，修炼出的能量流微乎其微，对力量毫无增益，与其它弟子的“正阳劲”效果天差地别。韩立一度心灰意冷，但当得知同伴张铁毫无进展时，他那微弱的成果反而成了坚持下去的动力。</p>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="cultivationChart"></canvas>
+                            </div>
+                             <p class="text-center text-sm text-gray-500 mt-2">图示：无名口诀修炼进度与其他功法预期对比</p>
+                            <div>
+                                <h3 class="font-semibold text-lg mb-2 text-[#673AB7]">墨大夫的疯狂</h3>
+                                <p class="text-gray-600">半年后，墨大夫在考核中发现韩立体内的能量流，态度发生180度大转弯。他状若疯狂，称韩立为“奇珍异宝”，并立即收为亲传弟子。这让韩立深感不安，意识到墨大夫对自己另有图谋。</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 4: 机缘篇 -->
+                <section id="section-4" class="timeline-item pl-10">
+                    <h2 class="text-2xl font-bold text-gray-700 mb-2">神秘之物：绿瓶的初现</h2>
+                    <p class="text-sm text-gray-500 mb-4">年龄：10岁 | 地点：神手谷</p>
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+                         <p class="mb-4">本节将简要概括韩立成为亲传弟子后的生活，并着重记录他意外发现神秘绿色小瓶子的过程，为他未来的修仙之路埋下最关键的伏笔。</p>
+                        <div class="flex flex-col items-center text-center">
+                            <div class="text-6xl mb-4">🧪</div>
+                            <h3 class="font-semibold text-xl mb-2 text-[#673AB7]">意外的发现</h3>
+                            <p class="text-gray-600 max-w-xl">成为亲传弟子后，韩立在一次散心中意外踢到了一个坚硬的物体。拨开落叶，一个拳头大小、通体翠绿、带有精美叶状花纹的神秘小瓶出现在他眼前。这个沉甸甸的瓶子，成为了他修仙生涯中最大的机缘。</p>
+                            <button onclick="openModal('bottle-modal')" class="mt-4 bg-[#9575CD] text-white px-4 py-2 rounded-lg hover:bg-[#7E57C2] transition-colors duration-300">查看神秘小瓶</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="mo-dafu-modal" class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 opacity-0 pointer-events-none">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6 relative">
+            <button onclick="closeModal('mo-dafu-modal')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">&times;</button>
+            <h3 class="text-2xl font-bold mb-4 text-gray-800">关键人物：墨大夫</h3>
+            <p class="text-gray-600">七玄门的供奉，医术高明，深受门主信赖。他相貌焦黄，体弱多病，似乎一直在寻求长生之法。他以招收药童为名，将韩立和张铁带入神手谷，其真实目的神秘莫测，对韩立的未来产生了决定性的影响。</p>
+        </div>
+    </div>
+
+    <div id="bottle-modal" class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 opacity-0 pointer-events-none">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6 relative">
+            <button onclick="closeModal('bottle-modal')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">&times;</button>
+            <h3 class="text-2xl font-bold mb-4 text-gray-800">神秘小瓶</h3>
+            <p class="text-gray-600">一个意外发现的绿色小瓶，非瓷非金，质地奇特，表面有精美的墨绿色叶状花纹。虽然在故事的初期，其功能尚未揭示，但它无疑是韩立踏上真正修仙大道的关键所在，也是他日后安身立命的最大依仗。</p>
+        </div>
+    </div>
+
+    <script>
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        const ctx = document.getElementById('cultivationChart').getContext('2d');
+        const cultivationChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['第1个月', '第2个月', '第3个月', '第4个月', '第5个月', '第6个月'],
+                datasets: [{
+                    label: '无名口诀修炼进度',
+                    data: [1, 1.2, 1.5, 1.7, 2, 2.2],
+                    backgroundColor: 'rgba(149, 117, 205, 0.2)',
+                    borderColor: 'rgba(149, 117, 205, 1)',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    pointBackgroundColor: 'rgba(149, 117, 205, 1)'
+                }, {
+                    label: '正阳劲预期进度',
+                    data: [10, 25, 45, 60, 80, 100],
+                    backgroundColor: 'rgba(200, 200, 200, 0.2)',
+                    borderColor: 'rgba(200, 200, 200, 1)',
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    tension: 0.4,
+                     pointBackgroundColor: 'rgba(200, 200, 200, 1)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '能量/力量单位 (示意)'
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += context.parsed.y;
+                                    if(context.dataset.label === '无名口诀修炼进度') {
+                                        label += ' (微乎其微)';
+                                    } else {
+                                        label += ' (力量显著)';
+                                    }
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
