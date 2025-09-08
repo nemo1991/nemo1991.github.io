@@ -19,4 +19,4 @@ tags: ["Deep Research"]
 
 1. [中国荒漠化治理的伟大转折](/gemini/Progress_in_Desertification_Control_in_China.html)
 2. [韩立时间线梳理](/gemini/A_Record_of_a_Mortals_Journey_to_Immortality.html)
-3. [K8s 微服务容器网络规划](/gemini/ms-on-k8s-network-rule.html)
+3. [K8s 微服务容器网络规划](/gemini/ms_on_k8s_network_rule.html)
