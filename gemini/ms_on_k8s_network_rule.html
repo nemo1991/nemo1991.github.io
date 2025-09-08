@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K8s 微服务容器网络规划规范</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: Cool Gray -->
+    <!-- Application Structure Plan: The application is designed as an interactive, thematic guide rather than a linear document. It uses a top navigation bar to allow users to explore core concepts of K8s networking in any order: Network Model, Service Communication, Security, External Access, and Observability. This structure was chosen because K8s networking involves distinct but interconnected topics. A thematic approach with interactive elements (like CNI comparisons and a policy visualizer) allows users to focus on one concept at a time and understand it deeply before moving on, promoting better comprehension than a simple top-to-bottom scroll. The goal is to facilitate both guided learning and quick reference for specific topics. -->
+    <!-- Visualization & Content Choices: 
+        1. CNI Plugins -> Goal: Compare -> Viz: Interactive Tabs -> Interaction: Click to show details -> Justification: Allows for easy side-by-side comparison of features, more engaging than a static table. (Vanilla JS)
+        2. Service Types -> Goal: Explain -> Viz: Simple Diagram + Text -> Interaction: Buttons update diagram/text -> Justification: Visually clarifies the abstract roles of different service types. (Vanilla JS, HTML/CSS)
+        3. Network Policy -> Goal: Demonstrate -> Viz: Interactive 3-Tier Diagram + Bar Chart -> Interaction: Toggle "Default Deny" state to update chart and diagram visuals -> Justification: Makes the impact of security policies tangible and easy to grasp. The chart provides a quantitative view of how policies reduce attack surface. (Chart.js, Vanilla JS)
+        Confirmation: No SVG or Mermaid used. All visuals are created with HTML/CSS or Chart.js on Canvas. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+        .nav-link.active {
+            color: #2563eb;
+            border-bottom-color: #2563eb;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .cni-button.active {
+            background-color: #2563eb;
+            color: white;
+        }
+        .service-type-button.active {
+            background-color: #1d4ed8;
+            color: white;
+            border-color: #1d4ed8;
+        }
+        .policy-node {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .policy-arrow {
+            position: absolute;
+            height: 2px;
+            background-color: #9ca3af;
+            transform-origin: left center;
+        }
+        .policy-arrow.allowed {
+            background-color: #22c55e;
+        }
+        .policy-arrow::after {
+            content: '';
+            position: absolute;
+            right: -1px;
+            top: -4px;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-left: 8px solid #9ca3af;
+        }
+        .policy-arrow.allowed::after {
+            border-left-color: #22c55e;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <div id="app" class="min-h-screen flex flex-col">
+        <header class="bg-white shadow-sm sticky top-0 z-50">
+            <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <div class="flex items-center">
+                        <span class="font-bold text-xl text-blue-600">K8s 网络规划</span>
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            <a href="#home" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-blue-600 border-b-2 border-transparent">首页</a>
+                            <a href="#model" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-blue-600 border-b-2 border-transparent">网络模型</a>
+                            <a href="#communication" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-blue-600 border-b-2 border-transparent">服务通信</a>
+                            <a href="#security" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-blue-600 border-b-2 border-transparent">安全策略</a>
+                            <a href="#access" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-blue-600 border-b-2 border-transparent">外部访问</a>
+                            <a href="#observability" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-blue-600 border-b-2 border-transparent">可观测性</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main class="flex-grow">
+            <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+                
+                <section id="home" class="content-section">
+                    <div class="bg-white p-8 rounded-lg shadow-md">
+                        <h1 class="text-3xl font-bold mb-4 text-slate-900">K8s 微服务容器网络规划规范</h1>
+                        <p class="text-lg text-slate-600 mb-6">在 Kubernetes (K8s) 中，一个健壮的网络规划是构建高效、安全且可维护的微服务架构的基石。本指南将通过交互式的方式，带您了解 K8s 网络的核心概念和最佳实践，帮助您为微服务应用设计出色的网络方案。</p>
+                        <p class="text-slate-600">本应用将引导您探索从基础的网络模型选择，到服务间的通信机制，再到至关重要的网络安全策略和可观测性建设。请使用顶部导航栏来探索不同主题，深入理解每个概念如何协同工作，共同构成一个强大的云原生网络环境。</p>
+                    </div>
+                </section>
+
+                <section id="model" class="content-section">
+                    <div class="bg-white p-8 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-bold mb-4 text-slate-900">1. 集群网络模型</h2>
+                        <p class="text-slate-600 mb-6">K8s 的核心是一个**扁平网络模型**，要求集群中所有 Pod 都能通过 IP 地址直接通信，无需网络地址转换 (NAT)。为实现此模型，您需要选择一个容器网络接口 (CNI) 插件。不同的 CNI 插件在性能、功能和安全性上各有侧重。点击下方按钮比较主流的 CNI 插件。</p>
+                        
+                        <div class="flex space-x-2 mb-6 border-b border-slate-200">
+                            <button class="cni-button py-2 px-4 font-semibold text-slate-600 rounded-t-md" data-cni="calico">Calico</button>
+                            <button class="cni-button py-2 px-4 font-semibold text-slate-600 rounded-t-md" data-cni="cilium">Cilium</button>
+                            <button class="cni-button py-2 px-4 font-semibold text-slate-600 rounded-t-md" data-cni="flannel">Flannel</button>
+                        </div>
+
+                        <div id="cni-details">
+                            <div id="cni-calico-content" class="cni-content">
+                                <h3 class="font-bold text-xl mb-2 text-blue-700">Calico</h3>
+                                <p class="text-slate-600">Calico 是一个功能强大的网络和网络安全解决方案。它利用 BGP 协议在三层网络上路由数据包，性能极高。其最突出的特点是提供了丰富且精细的网络策略（Network Policy）功能，非常适合对安全有严格要求的生产环境。</p>
+                                <ul class="list-disc list-inside mt-4 space-y-2 text-slate-600">
+                                    <li><span class="font-semibold">核心技术:</span> BGP 协议</li>
+                                    <li><span class="font-semibold">最佳场景:</span> 对网络安全和隔离有高要求的复杂环境。</li>
+                                    <li><span class="font-semibold">优点:</span> 强大的网络策略，高性能，可扩展性好。</li>
+                                </ul>
+                            </div>
+                            <div id="cni-cilium-content" class="cni-content" style="display:none;">
+                                <h3 class="font-bold text-xl mb-2 text-blue-700">Cilium</h3>
+                                <p class="text-slate-600">Cilium 采用创新的 eBPF 技术，在 Linux 内核层面提供网络、安全和可观测性。它能实现高性能的网络转发，并提供基于服务身份（而不仅仅是 IP）的七层网络策略，特别适合需要精细流量控制和低延迟的现代微服务架构。</p>
+                                <ul class="list-disc list-inside mt-4 space-y-2 text-slate-600">
+                                    <li><span class="font-semibold">核心技术:</span> eBPF (Extended Berkeley Packet Filter)</li>
+                                    <li><span class="font-semibold">最佳场景:</span> 高性能、云原生环境，需要 API 级别的安全控制。</li>
+                                    <li><span class="font-semibold">优点:</span> 极高性能，强大的 L7 策略，深度可观测性。</li>
+                                </ul>
+                            </div>
+                            <div id="cni-flannel-content" class="cni-content" style="display:none;">
+                                <h3 class="font-bold text-xl mb-2 text-blue-700">Flannel</h3>
+                                <p class="text-slate-600">Flannel 是一个简单可靠的二层网络解决方案。它通过创建覆盖网络（Overlay Network）来连接不同主机上的容器，配置简单，易于上手。虽然功能上不如 Calico 或 Cilium 丰富，但对于网络要求不高的中小型集群而言，是一个稳定且不错的选择。</p>
+                                <ul class="list-disc list-inside mt-4 space-y-2 text-slate-600">
+                                    <li><span class="font-semibold">核心技术:</span> VXLAN 等覆盖网络技术</li>
+                                    <li><span class="font-semibold">最佳场景:</span> 入门级或对网络功能要求不高的场景。</li>
+                                    <li><span class="font-semibold">优点:</span> 简单易用，配置方便，稳定性好。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="communication" class="content-section">
+                    <div class="bg-white p-8 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-bold mb-4 text-slate-900">2. 服务发现与通信</h2>
+                        <p class="text-slate-600 mb-6">在 K8s 中，Pod 的 IP 地址是动态变化的，不应直接用于通信。我们使用 **Service** 对象作为服务的稳定抽象。Service 提供一个固定的虚拟 IP（ClusterIP）和 DNS 名称，将流量转发到后端的 Pod。选择合适的 Service 类型对于服务的暴露至关重要。</p>
+
+                        <div class="flex flex-col md:flex-row gap-8">
+                            <div class="md:w-1/2">
+                                <div class="space-x-2 mb-4">
+                                    <button class="service-type-button border border-slate-300 py-2 px-4 rounded-md font-semibold text-sm" data-service="clusterip">ClusterIP</button>
+                                    <button class="service-type-button border border-slate-300 py-2 px-4 rounded-md font-semibold text-sm" data-service="nodeport">NodePort</button>
+                                    <button class="service-type-button border border-slate-300 py-2 px-4 rounded-md font-semibold text-sm" data-service="loadbalancer">LoadBalancer</button>
+                                </div>
+                                <div id="service-details">
+                                    <h3 id="service-title" class="font-bold text-xl text-blue-700 mb-2">ClusterIP</h3>
+                                    <p id="service-desc" class="text-slate-600 h-24">默认类型。在集群内部分配一个虚拟 IP，只能从集群内部访问。这是实现微服务之间通信的**首选方式**，确保了服务的内部隔离和安全。</p>
+                                </div>
+                            </div>
+                            <div class="md:w-1/2 flex items-center justify-center bg-slate-100 p-4 rounded-md">
+                                <div class="text-center w-full">
+                                    <div class="font-mono text-sm">
+                                        [ Pod A ] ---&gt; [ Service DNS ] ---&gt; [ <span id="service-target">Cluster IP</span> ] ---&gt; [ Pod B ]
+                                    </div>
+                                    <div id="nodeport-viz" class="hidden mt-4 text-sm text-slate-500">
+                                        External Traffic -&gt; NodeIP:Port -&gt; Service
+                                    </div>
+                                     <div id="loadbalancer-viz" class="hidden mt-4 text-sm text-slate-500">
+                                        External Traffic -&gt; Cloud LB IP -&gt; Service
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="security" class="content-section">
+                    <div class="bg-white p-8 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-bold mb-4 text-slate-900">3. 网络安全策略 (Network Policy)</h2>
+                        <p class="text-slate-600 mb-6">默认情况下，K8s 集群中所有 Pod 之间都可以自由通信，这存在安全风险。**Network Policy** 是一种定义 Pod 间访问规则的资源，是实现微服务网络隔离的“防火墙”。最佳实践是采用**默认拒绝**策略，然后按需开放必要的流量。</p>
+
+                        <div class="flex items-center justify-center mb-6">
+                            <span class="mr-3 font-medium">默认允许所有流量</span>
+                            <label for="policy-toggle" class="inline-flex relative items-center cursor-pointer">
+                                <input type="checkbox" value="" id="policy-toggle" class="sr-only peer">
+                                <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                            </label>
+                            <span class="ml-3 font-medium">启用默认拒绝策略</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                            <div>
+                                <h3 class="font-semibold text-lg text-center mb-4">三层应用通信示意图</h3>
+                                <div id="policy-diagram" class="relative w-full h-64 bg-slate-50 rounded-lg p-4 flex justify-around items-center">
+                                    <div class="policy-node text-center bg-white p-4 rounded-lg shadow">
+                                        <span class="font-bold">🌐 外部</span><br><span class="text-xs">Ingress</span>
+                                    </div>
+                                    <div class="policy-node text-center bg-white p-4 rounded-lg shadow">
+                                        <span class="font-bold">Frontend</span><br><span class="text-xs">Pod</span>
+                                    </div>
+                                    <div class="policy-node text-center bg-white p-4 rounded-lg shadow">
+                                        <span class="font-bold">Backend</span><br><span class="text-xs">Pod</span>
+                                    </div>
+                                    <div class="policy-node text-center bg-white p-4 rounded-lg shadow">
+                                        <span class="font-bold">Database</span><br><span class="text-xs">Pod</span>
+                                    </div>
+                                    <!-- Arrows will be drawn by JS -->
+                                </div>
+                                <p id="policy-explanation" class="text-center mt-4 text-sm text-slate-500">所有服务之间都可以自由通信，存在安全隐患。</p>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg text-center mb-4">潜在可利用的通信路径数量</h3>
+                                <div class="chart-container">
+                                    <canvas id="policyChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="access" class="content-section">
+                    <div class="bg-white p-8 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-bold mb-4 text-slate-900">4. 外部网络访问</h2>
+                        <p class="text-slate-600 mb-6">将集群内部的服务暴露给外部网络，主要有两种方式：**Ingress** 和 **LoadBalancer** 类型的 Service。它们适用于不同的场景。</p>
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div class="border border-slate-200 p-6 rounded-lg">
+                                <h3 class="font-bold text-xl mb-3 text-blue-700">Ingress</h3>
+                                <p class="text-slate-600 mb-4">Ingress 是管理外部访问的 API 对象，通常用于暴露 HTTP 和 HTTPS 服务。它工作在应用层（L7），可以根据主机名或 URL 路径将流量路由到不同的 Service，非常灵活。</p>
+                                <ul class="list-disc list-inside space-y-2 text-slate-600">
+                                    <li><strong>场景:</strong> 暴露多个 Web 服务，需要基于域名的虚拟主机。</li>
+                                    <li><strong>优点:</strong> 成本效益高（一个公网 IP 服务多个应用），配置灵活，支持 SSL 终止。</li>
+                                    <li><strong>需要:</strong> 集群中必须部署一个 Ingress 控制器（如 Nginx, Traefik）。</li>
+                                </ul>
+                            </div>
+                            <div class="border border-slate-200 p-6 rounded-lg">
+                                <h3 class="font-bold text-xl mb-3 text-blue-700">Service (LoadBalancer 类型)</h3>
+                                <p class="text-slate-600 mb-4">当 Service 类型设置为 `LoadBalancer` 时，在云环境中，它会自动创建一个云厂商提供的外部负载均衡器。它工作在传输层（L4），将流量直接转发到 Service。</p>
+                                <ul class="list-disc list-inside space-y-2 text-slate-600">
+                                    <li><strong>场景:</strong> 暴露单个 TCP/UDP 服务，或需要直接使用云厂商 LB 的高级功能。</li>
+                                    <li><strong>优点:</strong> 简单直接，性能高，由云平台管理。</li>
+                                    <li><strong>缺点:</strong> 每个 Service 需要一个独立的公网 IP，成本较高。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="observability" class="content-section">
+                    <div class="bg-white p-8 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-bold mb-4 text-slate-900">5. 可观测性与故障排查</h2>
+                        <p class="text-slate-600 mb-6">有效的网络可观测性对于维护微服务应用的健康至关重要。这包括对网络流量的监控、日志记录和快速的故障排查能力。</p>
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xl">📈</div>
+                                <div class="ml-4">
+                                    <h3 class="text-lg font-semibold">网络流量监控</h3>
+                                    <p class="text-slate-600">使用 Prometheus 收集网络指标（如流量、延迟、错误率），并通过 Grafana 进行可视化。这有助于主动发现性能瓶颈和异常行为。</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xl">📋</div>
+                                <div class="ml-4">
+                                    <h3 class="text-lg font-semibold">日志记录</h3>
+                                    <p class="text-slate-600">确保 CNI 插件和 Ingress 控制器启用了详细的日志记录。将日志集中收集（如使用 EFK 或 Loki 栈），以便在出现连接问题时进行审计和排查。</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xl">🛠️</div>
+                                <div class="ml-4">
+                                    <h3 class="text-lg font-semibold">网络工具 Pod</h3>
+                                    <p class="text-slate-600">在集群中常备一个包含常用网络工具（如 `ping`, `telnet`, `curl`, `nslookup`）的 "netshoot" Pod。这可以帮助您从集群内部的视角快速诊断连通性和 DNS 解析问题。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('.content-section');
+
+            function updateContent(hash) {
+                hash = hash || window.location.hash || '#home';
+                
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === hash) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+
+                sections.forEach(section => {
+                    if ('#' + section.id === hash) {
+                        section.classList.add('active');
+                    } else {
+                        section.classList.remove('active');
+                    }
+                });
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetHash = this.getAttribute('href');
+                    history.pushState(null, null, targetHash);
+                    updateContent(targetHash);
+                });
+            });
+            
+            window.addEventListener('popstate', () => updateContent(window.location.hash));
+            updateContent();
+
+            // CNI Tabs
+            const cniButtons = document.querySelectorAll('.cni-button');
+            const cniContents = document.querySelectorAll('.cni-content');
+            cniButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    cniButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    const cni = button.dataset.cni;
+                    cniContents.forEach(content => {
+                        if (content.id === `cni-${cni}-content`) {
+                            content.style.display = 'block';
+                        } else {
+                            content.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            cniButtons[0].click();
+
+            // Service Types
+            const serviceButtons = document.querySelectorAll('.service-type-button');
+            const serviceTitle = document.getElementById('service-title');
+            const serviceDesc = document.getElementById('service-desc');
+            const serviceTarget = document.getElementById('service-target');
+            const nodeportViz = document.getElementById('nodeport-viz');
+            const loadbalancerViz = document.getElementById('loadbalancer-viz');
+            
+            const serviceData = {
+                clusterip: {
+                    title: 'ClusterIP',
+                    desc: '默认类型。在集群内部分配一个虚拟 IP，只能从集群内部访问。这是实现微服务之间通信的**首选方式**，确保了服务的内部隔离和安全。',
+                    target: 'Cluster IP'
+                },
+                nodeport: {
+                    title: 'NodePort',
+                    desc: '在每个节点上暴露一个静态端口。外部流量可以通过 `[NodeIP]:[NodePort]` 访问服务。通常用于测试或临时暴露服务，不推荐用于生产环境。',
+                    target: 'Node Port'
+                },
+                loadbalancer: {
+                    title: 'LoadBalancer',
+                    desc: '在云环境中，自动创建一个云厂商的外部负载均衡器，并将流量转发到服务。这是将服务安全、可靠地暴露给外部的**标准方式**。',
+                    target: 'Load Balancer'
+                }
+            };
+
+            serviceButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    serviceButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    const type = button.dataset.service;
+                    serviceTitle.textContent = serviceData[type].title;
+                    serviceDesc.innerHTML = serviceData[type].desc;
+                    serviceTarget.textContent = serviceData[type].target;
+                    
+                    nodeportViz.classList.toggle('hidden', type !== 'nodeport');
+                    loadbalancerViz.classList.toggle('hidden', type !== 'loadbalancer');
+                });
+            });
+            serviceButtons[0].click();
+
+            // Network Policy Chart & Diagram
+            const policyToggle = document.getElementById('policy-toggle');
+            const policyExplanation = document.getElementById('policy-explanation');
+            const diagramContainer = document.getElementById('policy-diagram');
+            const nodes = diagramContainer.querySelectorAll('.policy-node');
+
+            const ctx = document.getElementById('policyChart').getContext('2d');
+            const policyChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['默认允许', '默认拒绝'],
+                    datasets: [{
+                        label: '通信路径数',
+                        data: [6, 2],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            function drawArrow(from, to, allowed) {
+                const fromRect = from.getBoundingClientRect();
+                const toRect = to.getBoundingClientRect();
+                const containerRect = diagramContainer.getBoundingClientRect();
+
+                const startX = from.offsetLeft + from.offsetWidth / 2;
+                const startY = from.offsetTop + from.offsetHeight / 2;
+                const endX = to.offsetLeft + to.offsetWidth / 2;
+                const endY = to.offsetTop + to.offsetHeight / 2;
+                
+                const angle = Math.atan2(endY - startY, endX - startX);
+                const length = Math.hypot(endX - startX, endY - startY) - (from.offsetWidth / 2) - (to.offsetWidth / 2) - 10;
+                
+                const arrow = document.createElement('div');
+                arrow.className = 'policy-arrow';
+                if (allowed) arrow.classList.add('allowed');
+
+                arrow.style.left = `${startX + (from.offsetWidth / 2 + 5) * Math.cos(angle)}px`;
+                arrow.style.top = `${startY + (from.offsetHeight / 2 + 5) * Math.sin(angle)}px`;
+                arrow.style.width = `${length}px`;
+                arrow.style.transform = `rotate(${angle * 180 / Math.PI}deg)`;
+                
+                diagramContainer.appendChild(arrow);
+            }
+
+            function updatePolicyVisuals(isDefaultDeny) {
+                diagramContainer.querySelectorAll('.policy-arrow').forEach(el => el.remove());
+                
+                if(isDefaultDeny) {
+                    policyExplanation.textContent = '启用策略后，只允许必要的流量通过，大大增强了安全性。';
+                    // Ingress -> Frontend
+                    drawArrow(nodes[0], nodes[1], true);
+                    // Frontend -> Backend
+                    drawArrow(nodes[1], nodes[2], true);
+                    // Backend -> Database
+                    drawArrow(nodes[2], nodes[3], true);
+                } else {
+                    policyExplanation.textContent = '所有服务之间都可以自由通信，存在安全隐患。';
+                    // All to all
+                    drawArrow(nodes[0], nodes[1], false);
+                    drawArrow(nodes[1], nodes[2], false);
+                    drawArrow(nodes[2], nodes[3], false);
+                    drawArrow(nodes[1], nodes[3], false);
+                }
+            }
+
+            policyToggle.addEventListener('change', (event) => {
+                updatePolicyVisuals(event.target.checked);
+            });
+            
+            // Initial draw
+            updatePolicyVisuals(false);
+
+            // Redraw on resize
+            new ResizeObserver(() => updatePolicyVisuals(policyToggle.checked)).observe(diagramContainer);
+
+        });
+    </script>
+</body>
+</html>
