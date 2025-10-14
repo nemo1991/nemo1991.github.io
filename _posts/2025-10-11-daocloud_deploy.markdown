@@ -216,8 +216,9 @@ chmod +x ./dce5-installer
 
 
 ## Q&A
-1. 在初始化master节点时coredns遇到异常，参照[k8s-集群初始化kubeadm init踩的坑和解决方法](https://juejin.cn/post/7291570449334812735)使用阿里云的镜像解决。
-```
+### 1. 初始化master时coredns异常 
+
+```bash
 [config/images] Pulled k8s-gcr.m.daocloud.io/etcd:3.5.6-0
 failed to pull image "k8s-gcr.m.daocloud.io/coredns:v1.9.3": output: E1013 10:28:46.518723    4656 remote_image.go:171] "PullImage from image service failed" err="rpc error: code = Unknown desc = failed to pull and unpack image \"k8s-gcr.m.daocloud.io/coredns:v1.9.3\": failed to resolve reference \"k8s-gcr.m.daocloud.io/coredns:v1.9.3\": unexpected status from HEAD request to https://k8s-gcr.m.daocloud.io/v2/coredns/manifests/v1.9.3: 403 Forbidden" image="k8s-gcr.m.daocloud.io/coredns:v1.9.3"
 time="2025-10-13T10:28:46+08:00" level=fatal msg="pulling image: rpc error: code = Unknown desc = failed to pull and unpack image \"k8s-gcr.m.daocloud.io/coredns:v1.9.3\": failed to resolve reference \"k8s-gcr.m.daocloud.io/coredns:v1.9.3\": unexpected status from HEAD request to https://k8s-gcr.m.daocloud.io/v2/coredns/manifests/v1.9.3: 403 Forbidden"
@@ -228,9 +229,11 @@ bash: kubeadmin: command not found...
 [root@k8s-master01 ~]# kubeadm config image list
 invalid subcommand: "image"
 To see the stack trace of this error execute with --v=5 or higher
-
 ```
-2. 在1.8中安装的组件说明如下
+在初始化master节点时coredns遇到异常，参照[k8s-集群初始化kubeadm init踩的坑和解决方法](https://juejin.cn/post/7291570449334812735)使用阿里云的镜像解决。
+关于coredns init异常的问题，参考
+https://github.com/DaoCloud/public-image-mirror/issues/36080#issuecomment-2568590033
+### 2. 在1.8节中安装的组件是什么？
    
 | 组件名称 | 作用类别 | 详细作用描述 | 容器化（Docker/K8s）关联 |
 | :--- | :--- | :--- | :--- |
@@ -238,7 +241,7 @@ To see the stack trace of this error execute with --v=5 or higher
 | **device-mapper-persistent-data** | 存储底层依赖 | 提供了 Linux 内核 **Device Mapper** 框架所需的持久化数据管理工具和库。 | 确保 Docker 等容器运行时可以利用 Device Mapper 的**精简配置和快照**功能（例如在旧版或特定配置下使用 `devicemapper` 存储驱动）。 |
 | **lvm2** | 存储管理工具 | **逻辑卷管理器 (LVM)** 的命令行工具集。LVM 是 Device Mapper 的一个重要应用。 | 作为 Device Mapper 框架的底层依赖包，确保系统中具备完整的 **块级存储管理能力**，是容器运行时环境的通用要求之一。 |
 
-3. 卸载daocloud
+### 3. 如何卸载DCE5
 https://docs.daocloud.io/install/uninstall#_2
 
 ```bash
@@ -257,15 +260,15 @@ helm -n kpanda-system uninstall kpanda
 helm -n istio-system uninstall istio-base istio-ingressgateway istiod
 kubectl delete namespace mcamel-system ghippo-system insight-system ipavo-system kpanda-system istio-system
 ```
-4. kubelet 状态异常未能正常启动，排查发现containerd未更新配置
+### 4. kubelet 状态异常未能正常启动
 
 ```bash
-# 查看服务日志，通过journalctl命令
+# 查看服务日志，通过journalctl命令查看日志，根据日志提示丁伟问题，我这边是未进行containerd配置初始化步骤
 journalctl -xeu kubelet
 ```
-5. 拉取镜像时用到的一些命令
-关于coredns init异常的问题，参考
-https://github.com/DaoCloud/public-image-mirror/issues/36080#issuecomment-2568590033
+
+### 5. 安装k8s一些命令集合
+
 
 ```bash
 
@@ -290,19 +293,24 @@ kubeadm create token --print-join-command
 kubectl logs kube-scheduler-k8s-master01 -n kube-system
 ```
 
-6. 关于1.6 设置br_netfilter内核参数并允许iptables进行桥接流量
+### 6. 关于1.6节 设置br_netfilter内核参数并允许iptables进行桥接流量的一些知识点
+
 /etc/modules-load.d systemd 目录是 Linux 系统中用于配置内核模块在系统启动时自动加载的关键位置。systemd服务读取和管理，静态配置系统启动时需要加载的内核模块列表
 
 tee 命令的作用是 既将内容输出到屏幕，又将其写入指定文件
 
 /etc/modules-load.d/kubernetes.conf 永久和临时加载 br_netfilter 模块允许 iptables 进行桥接流量过滤功能所必需的 。
- modprobe：是 Linux 下用于加载内核模块的命令。
- overlay：指的是 OverlayFS (Overlay File System) 模块。这是 Docker 和 Kubernetes 容器运行时 最常用的文件系统驱动之一，因为它高效、支持层叠（layering）
- br_netfilter：指的是 Bridge Netfilter 模块。这个模块是实现 桥接流量（Bridged Traffic）可以被 Netfilter/iptables 框架处理 的关键
 
+modprobe：是 Linux 下用于加载内核模块的命令。
+
+overlay：指的是 OverlayFS (Overlay File System) 模块。这是 Docker 和 Kubernetes 容器运行时 最常用的文件系统驱动之一，因为它高效、支持层叠（layering）
+
+br_netfilter：指的是 Bridge Netfilter 模块。这个模块是实现 桥接流量（Bridged Traffic）可以被 Netfilter/iptables 框架处理 的关键
 
 /etc/sysctl.d/ 目录：用于存放内核参数配置文件。文件名以 .conf 结尾的文件在系统启动时会被自动加载。
 
-net.bridge.bridge-nf-call-iptables	1	开启 IPv4 桥接流量的 Netfilter/iptables 过滤。 这是为了让运行在 Linux 网桥 上的数据包（例如 Docker 或 K8s 容器之间、或容器进出主机的流量）能够被主机的 防火墙规则（iptables） 看到并处理。
-net.bridge.bridge-nf-call-ip6tables	1	开启 IPv6 桥接流量的 ip6tables 过滤。 与上面类似，只是针对 IPv6 流量。
-net.ipv4.ip_forward	1	开启 IPv4 数据包转发（路由功能）。 这意味着内核将作为路由器工作，允许将数据包从一个网络接口转发到另一个网络接口。这对于 K8s 和 Docker 至关重要，因为它允许： - 容器流量从内部虚拟网络转发到主机的物理网络（出站）。 - 外部流量通过 NAT 转发到容器（入站，如 NodePort 或 Ingress 访问）。
+| 内核参数名称 | 默认值 | 描述 |
+| ---- | ---- | ---- |
+| net.bridge.bridge-nf-call-iptables	| 1|	开启 IPv4 桥接流量的 Netfilter/iptables 过滤。 这是为了让运行在 Linux 网桥 上的数据包（例如 Docker 或 K8s 容器之间、或容器进出主机的流量）能够被主机的 防火墙规则（iptables） 看到并处理。|
+|net.bridge.bridge-nf-call-ip6tables	|1	|开启 IPv6 桥接流量的 ip6tables 过滤。 与上面类似，只是针对 IPv6 流量。|
+|net.ipv4.ip_forward|	1|	开启 IPv4 数据包转发（路由功能）。 这意味着内核将作为路由器工作，允许将数据包从一个网络接口转发到另一个网络接口。这对于 K8s 和 Docker 至关重要，因为它允许： - 容器流量从内部虚拟网络转发到主机的物理网络（出站）。 - 外部流量通过 NAT 转发到容器（入站，如 NodePort 或 Ingress 访问）。|
