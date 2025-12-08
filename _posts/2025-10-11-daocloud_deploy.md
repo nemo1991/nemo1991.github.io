@@ -263,7 +263,7 @@ kubectl delete namespace mcamel-system ghippo-system insight-system ipavo-system
 ### 4. kubelet 状态异常未能正常启动
 
 ```bash
-# 查看服务日志，通过journalctl命令查看日志，根据日志提示丁伟问题，我这边是未进行containerd配置初始化步骤
+# 查看服务日志，通过journalctl命令查看日志，根据日志提示定位问题，我这边是未进行containerd配置初始化步骤导致启动失败。
 journalctl -xeu kubelet
 ```
 

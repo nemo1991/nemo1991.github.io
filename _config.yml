@@ -170,6 +170,8 @@ collections:
   tabs:
     output: true
     sort_by: order
+  posts:
+    output: true
 
 defaults:
   - scope:
@@ -224,3 +226,7 @@ jekyll-archives:
   permalinks:
     tag: /tags/:name/
     category: /categories/:name/
+
+jekyll_admin:
+  hidden_links:
+  homepage: "pages"

@@ -37,8 +37,9 @@ adb-free 镜像大小为1.5G,拉取不需要身份验证
 # mt2. 部署容器
 
 ## 可用环境变量
+
 | Environment variable |	Description |
-| ---- | --- |
+| --- | --- |
 | WORKLOAD_TYPE |	Can be either ATP or ADW. Default value is ATP |
 | DATABASE_NAME	| Database name should contain only alphanumeric characters. if not provided, the Database will be called either MYATP or MYADW depending on the passed workload type|
 |ADMIN_PASSWORD |	Admin user password must be between 12 and 30 characters long and must include at least one uppercase letter, one lowercase letter, and one numeric. The password cannot contain username |
@@ -46,6 +47,7 @@ adb-free 镜像大小为1.5G,拉取不需要身份验证
 | ENABLE_ARCHIVE_LOG |	To enable archive logging in the database. Default value is True. To turn off archive logging set the value to False |
 
 ## 端口
+
 | Port |	Description |
 | ---- | ---- |
 | 1521 |	TLS |
