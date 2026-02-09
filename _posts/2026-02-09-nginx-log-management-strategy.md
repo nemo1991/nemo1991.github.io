@@ -52,6 +52,14 @@ cron -e
 }
 ```
 2. 权限问题,nginx进程无法按照日期创建日志文件
+
+rwx 4 read 2 write 1 x 执行 execute？
+
+owner /group /other
+
+rwxrwxr-x 775
+rwxrwxrwx 777
+
 ```
 # 查看nginx worker进行运行用户，通过ps命令或nginx.conf检查
 ps aux | grep nginx | grep worker
@@ -92,3 +100,4 @@ kill -9 pid
 # 可以通过重定向命令
 true > access.log
 ```
+
