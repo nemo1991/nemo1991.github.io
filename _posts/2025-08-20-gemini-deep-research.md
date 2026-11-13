@@ -1,8 +1,8 @@
 ---
-title:  "Gemini Deep Research"
-date:   2025-08-20 10:08:00 +0800
-categories: ["tech","Gemini"]
-tags: ["Deep Research"]
+title: "Gemini Deep Research"
+date: 2025-08-20 10:08:00 +0800
+categories: [tech]
+tags: [deep-research, gemini]
 ---
 
 # 1. 中国荒漠化治理的伟大转折

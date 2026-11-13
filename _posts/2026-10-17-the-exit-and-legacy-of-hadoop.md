@@ -1,11 +1,7 @@
 ---
 title: Hadoop 的退场与遗产：一场关于存算耦合的架构演进
-categories:
-- tech
-- big-data
-tags:
-- hadoop
-- deepseek
+categories: [tech]
+tags: [hadoop, deepseek, big-data]
 ---
 
 > 本文由deepseek生成

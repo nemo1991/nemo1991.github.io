@@ -79,7 +79,25 @@ bash tools/test.sh
 
 ### front matter
 
-- 分类一律用复数 `categories`，配合 `tags`、`toc`。
+字段顺序统一为 `title` → `date` → `categories` → `tags`（可选 `toc`），数组一律用**内联写法** `[a, b]`，冒号后单空格。此格式参照 Chirpy 官方 [Writing a New Post](https://chirpy.cotes.page/posts/write-a-new-post/)：
+
+```yaml
+---
+title: 文章标题
+date: 2026-11-13 10:00:00 +0800
+categories: [tech]
+tags: [k8s, oracle]
+toc: true   # 可省略，站点默认开启
+---
+```
+
+- 分类一律用复数 `categories`，**最多 2 个元素**（官方支持 `[顶层, 子层]` 层级）；本站只用单层。
+- 标签用复数 `tags`，元素数量不限，**一律小写**、空格用连字符（官方明确要求 `TAG names should always be lowercase`）。
+- 全站仅两个顶层分类，按**内容类型**划分：
+  - `tech` —— 技术实操类（Oracle on K8s、DaoCloud、Tomcat、Hadoop、Docker、Gemini 等）。
+  - `daily` —— 技术剪藏、随手记与文艺随笔（poetry / drawn / movie 等）。
+  - 不再使用年份（如 `2017`/`2025`）、重启标记（`reborn`）或单篇工具名（如 `k8s`/`java`/`big-data`/`containerization`/`Gemini`）作为分类；这些主题改用 `tags` 承载。
+- 标签避免 `Deep Research` 这类大小写/空格混用的历史写法（现已统一为 `deep-research`）；同一主题不重复打标（如 `paddle` 与 `paddleocr` 合并为 `paddleocr`）。
 - 日期可省略（由文件名提供）；如需精确到时间，写 `date: YYYY-MM-DD HH:MM:SS +0800`，务必带时区。
 
 ## 部署

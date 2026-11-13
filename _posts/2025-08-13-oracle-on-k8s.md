@@ -1,8 +1,8 @@
 ---
-title:  "oracle on k8s"
-date:   2025-08-13 09:24:00 +0800
-categories: ["tech","k8s"]
-tags: ["oracle","k8s"]
+title: "oracle on k8s"
+date: 2025-08-13 09:24:00 +0800
+categories: [tech]
+tags: [oracle, k8s]
 ---
 
 target: run oracle on k8s for develop.

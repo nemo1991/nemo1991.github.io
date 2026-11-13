@@ -1,10 +1,7 @@
 ---
 title: Managing Tomcat Logs
-categories:
-- tech
-- java
-tags:
-- tomcat
+categories: [tech]
+tags: [tomcat, java]
 ---
 
 我喜欢提出问题，逐步解决的方式来构建文章。

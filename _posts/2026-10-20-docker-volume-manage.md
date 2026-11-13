@@ -1,11 +1,7 @@
 ---
 title: Docker 卷管理完全指南：原理、命令行与 Compose 实战
-categories:
-- tech
-- containerization
-tags:
-- docker
-- deepseek
+categories: [tech]
+tags: [docker, deepseek, containerization]
 ---
 
 > 本文由deepseek生成

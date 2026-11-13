@@ -1,8 +1,8 @@
 ---
-title:  "daocloud deploy"
-date:   2025-10-11 15:01:00 +0800
-categories: ["tech","k8s"]
-tags: ["daocloud","k8s"]
+title: "daocloud deploy"
+date: 2025-10-11 15:01:00 +0800
+categories: [tech]
+tags: [daocloud, k8s]
 ---
 
 # daocloud 部署
