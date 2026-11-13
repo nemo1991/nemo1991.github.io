@@ -14,7 +14,7 @@ version: 19c
 Oracle 官方的镜像仓库:https://container-registry.oracle.com/
 
 打开首页提示不在支持SSO password Login docker cli. 生成authtoken令牌。
-![sso forbidden](<../assets/img/posts/2025-08-13-oracle on k8s/image.png>)
+![sso forbidden](../assets/img/posts/2025-08-13-oracle-on-k8s/image.png)
 
 
 存储库中有很多edition
@@ -60,7 +60,7 @@ adb_container_volume:/u01/data
 
 
 ## yaml
-[oracle19c.yaml](/assets/file/oracle19c.yaml)
+[oracle19c.yaml](../assets/file/oracle19c.yaml)
 
 # Reference
 
@@ -72,7 +72,7 @@ Oracle Instant Client 是一个轻量级的Oracle 数据库客户端，它允许
 
 自治管理面不同，根据应用场景进行选择，事务型应用选择ATP、数据分析型应用选择ADW
 
-![ADW & ATP](<../assets/img/posts/2025-08-13-oracle on k8s/image-1.png>)
+![ADW & ATP](../assets/img/posts/2025-08-13-oracle-on-k8s/image-1.png)
 
 ## podman --device
 podman --device 参数用于将主机设备添加到容器或Pod中。通过该参数，你可以指定要添加到容器或Pod中的设备，并设置相应的权限。
@@ -95,7 +95,7 @@ kubectl exec -ti <your-pod-name>  -n <your-namespace>  -- /bin/sh
 kubectl expose replication/oracle19c --type="NodePort" --port 1521
 ```
 
-![alt text](<../assets/img/posts/2025-08-13-oracle on k8s/image-2.png>)
+![alt text](../assets/img/posts/2025-08-13-oracle-on-k8s/image-2.png)
 
 [Oracle Database 19c on Kubernetes with Portworx storage](https://ronekins.com/2020/11/06/oracle-database-19c-on-kubernetes-with-portworx-storage/)
 [autonomous-database-container-free](https://docs.oracle.com/en-us/iaas/autonomous-database-serverless/doc/autonomous-database-container-free.html#GUID-03B5601E-E15B-4ECC-9929-D06ACF576857)
